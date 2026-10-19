@@ -1,0 +1,74 @@
+<link rel="stylesheet" href="styles.css">
+
+<div class="gt">
+  <header class="gt-head">
+    <h1 class="gt-title" id="title">Language mistake tracker</h1>
+    <p class="gt-takeaway" id="takeaway">Most common mistake: <b class="dash-skeleton" data-source="by_category" data-field="category" data-where="language=All&amp;rank=1">—</b>, <b class="dash-skeleton" data-source="by_category" data-field="count" data-where="language=All&amp;rank=1">—</b> of <b class="dash-skeleton" data-source="totals" data-field="total" data-where="language=All">—</b> corrections (<span class="dash-skeleton" data-source="by_category" data-field="share" data-where="language=All&amp;rank=1">—</span>).</p>
+    <p class="gt-tip" id="tip" data-source="guides"></p>
+  </header>
+
+  <div class="gt-langs" id="langs" aria-label="Language"></div>
+
+  <section class="gt-review" id="review">
+    <div class="gt-card" id="review-top-card">
+      <h2 id="quick-review">Top mistakes to watch</h2>
+      <p class="gt-note">Your three most common types: the rule, and your latest slip.</p>
+      <ul class="gt-rv-list dash-skeleton" id="review-top" data-source="by_category guides"></ul>
+    </div>
+    <div class="gt-card" id="review-rep-card">
+      <h2 id="repeats">Made more than once</h2>
+      <p class="gt-note">The same rule, corrected again. These are the habits to break.</p>
+      <ul class="gt-rv-list dash-skeleton" id="review-repeats" data-source="repeats"></ul>
+    </div>
+  </section>
+
+  <section class="gt-card gt-section" id="guides-card">
+    <h2 id="rules">Rules and memory tricks</h2>
+    <p class="gt-note">One card per mistake type, most frequent first: the rule, a trick to remember it, and your own examples.</p>
+    <div class="gt-guides dash-skeleton" id="guides" data-source="guides by_category"></div>
+  </section>
+
+  <section class="gt-tiles" id="tiles">
+    <div class="gt-card"><p class="gt-tile-label">Corrections logged</p><p class="gt-tile-value dash-skeleton" data-source="totals" data-field="total" data-where="language=All">—</p></div>
+    <div class="gt-card"><p class="gt-tile-label">Mistake types</p><p class="gt-tile-value dash-skeleton" data-source="totals" data-field="categories" data-where="language=All">—</p></div>
+    <div class="gt-card"><p class="gt-tile-label">Days with corrections</p><p class="gt-tile-value dash-skeleton" data-source="totals" data-field="days" data-where="language=All">—</p></div>
+    <div class="gt-card"><p class="gt-tile-label">Tracking since</p><p class="gt-tile-value dash-skeleton" data-source="totals" data-field="since" data-where="language=All">—</p></div>
+  </section>
+
+  <section class="gt-grid">
+    <div class="gt-card" id="types-card">
+      <h2 id="by-type">Mistakes by type</h2>
+      <p class="gt-note">All time. Click a bar to list those corrections below.</p>
+      <div class="gt-chart dash-skeleton" id="chart-cat" data-source="by_category"></div>
+    </div>
+    <div class="gt-card" id="days-card">
+      <h2 id="per-day">Corrections per day</h2>
+      <p class="gt-note">How many fixes each day of chatting needed.</p>
+      <div class="gt-chart dash-skeleton" id="chart-day" data-source="by_day"></div>
+    </div>
+  </section>
+
+  <section class="gt-card" id="list-card">
+    <h2 id="all">All corrections</h2>
+    <p class="gt-note">Newest first: what you wrote, the fix, and why.</p>
+    <div class="gt-tools">
+      <input class="gt-search" id="search" type="search" placeholder="Search words or rules" aria-label="Search corrections">
+      <button class="gt-btn" id="clear" type="button">Clear</button>
+      <span class="gt-filter" id="filter-label"></span>
+    </div>
+    <div class="gt-tablebox">
+      <table class="gt-table" id="table" data-source="corrections" data-row-key="id">
+        <colgroup id="cols"></colgroup>
+        <thead><tr id="thead-row"></tr></thead>
+        <tbody id="tbody"></tbody>
+      </table>
+    </div>
+  </section>
+</div>
+<script src="calcs.js"></script>
+<script src="shared.js"></script>
+<script src="header.js"></script>
+<script src="review.js"></script>
+<script src="charts.js"></script>
+<script src="table.js"></script>
+<script src="main.js"></script>

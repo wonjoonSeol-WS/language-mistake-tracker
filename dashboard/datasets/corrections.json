@@ -3,11 +3,7 @@
   "source": {
     "kind": "file",
     "name": "corrections.csv",
-    "url": "/_blob/7eae1477dda6ab3b996d9b9ce96babd8"
+    "url": "/_blob/<set when the file is uploaded>"
   },
-  "title": "Your language corrections",
-  "updated": {
-    "at": "2026-10-19T13:40:00Z",
-    "by": "Claude"
-  }
+  "title": "Your language corrections"
 }

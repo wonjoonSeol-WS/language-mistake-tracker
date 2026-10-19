@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "language": "English",
+    "category": "Articles",
+    "title": "A singular noun never goes out alone",
+    "rule": "A singular countable noun needs a, an, the, or a word like my or this in front of it.",
+    "mnemonic": "One thing, one helper: if you can count it and there is one, give it an article.",
+    "examples": "I bought car → I bought a car | He is engineer → He is an engineer"
+  },
+  {
+    "id": 2,
+    "language": "English",
+    "category": "Subject-verb agreement",
+    "title": "Find the subject, then match the verb",
+    "rule": "He, she, it and singular nouns take a verb ending in -s in the present tense.",
+    "mnemonic": "One subject, one s.",
+    "examples": "She go to work → She goes to work"
+  }
+]

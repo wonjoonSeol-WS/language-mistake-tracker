@@ -1,0 +1,4 @@
+id,date,language,category,original,corrected,rule
+1,2026-01-05,English,Articles,I bought car yesterday,I bought a car yesterday,A singular countable noun needs an article.
+2,2026-01-05,English,Subject-verb agreement,She go to work by bus,She goes to work by bus,A third-person singular subject takes a verb ending in -s.
+3,2026-01-06,English,Articles,He is engineer,He is an engineer,A singular countable noun needs an article.
