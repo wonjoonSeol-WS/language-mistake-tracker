@@ -77,7 +77,6 @@ dashboard/
     review.js              자주 하는 실수, 반복 실수, 가이드 카드
     charts.js              유형별, 일별 차트
     table.js               교정 목록 표: 열, 너비 조절, 검색, 유형 필터
-    main.js                데이터가 바뀌면 모든 패널을 다시 그림
 skill/language-coach/      교정 및 기록 스킬
 INSTALL.md                 Claude가 따라 하는 설치 절차
 examples/                  예시 교정 기록과 가이드
@@ -86,19 +85,19 @@ data/                      내 데이터 (git에서 제외)
 
 ## 페이지 동작 방식
 
-이 페이지는 단독 HTML이 아니라 Claude 대시보드 안에서 실행됩니다. 대시보드가 `dash`(데이터 로딩, 파생 데이터셋, 필터), `d3` v7, `--color-fg` 같은 테마 변수를 제공합니다. 스크립트는 파일마다 별도 스코프에서 실행되므로, 파일 간 공유 코드는 `window.LMT`를 통합니다.
+이 페이지는 단독 HTML이 아니라 Claude 대시보드 안에서 실행됩니다. 대시보드가 `dash`(데이터 로딩, 파생 데이터셋, 필터), `d3` v7, `--color-fg` 같은 테마 변수를 제공합니다. 스크립트는 파일마다 별도 스코프에서 실행되므로, 파일 간 공유 코드는 `window.LMT`를 통하고, 패널 파일마다 자기 `dash.onData` 다시 그리기를 등록합니다.
 
 모든 차트와 수치는 아래 파생 데이터셋에서 나옵니다.
 
 | calc | 입력 | 내용 |
 |---|---|---|
-| `scoped` | corrections | 각 교정을 해당 언어와 `All` 아래에 하나씩, `day`는 날짜 형식 통일 |
-| `by_category` | scoped | (언어, 유형)별 개수, 비율, 순위, 최근 예시 |
-| `by_day` | scoped | (언어, 날짜)별 교정 수 |
-| `totals` | scoped | 언어별 총 교정 수, 유형 수, 기록한 날 수, 시작일 |
-| `repeats` | scoped | 언어별로 두 번 이상 교정받은 규칙 |
+| `scoped` | corrections | 각 교정을 `scope` = 해당 언어, `scope` = `All`로 두 번씩. 빈 언어는 English, `day`는 `YYYY-MM-DD` |
+| `by_category` | scoped | (scope, 유형)별 개수, 비율, 순위, 최근 예시 |
+| `by_day` | scoped | (scope, 날짜)별 교정 수 |
+| `totals` | scoped | scope별 총 교정 수, 유형 수, 기록한 날 수, 시작일 |
+| `repeats` | scoped | scope별로 두 번 이상 교정받은 규칙 |
 
-calc 함수는 읽는 사람에게 소스가 그대로 보이기 때문에 외부 헬퍼 없이 자기 완결적이어야 합니다. 그래서 공통 정규화는 헬퍼 대신 `scoped`에 있습니다.
+언어 버튼은 `language` 필터를 바꾸고, 모든 패널은 `scope`가 그 값과 같은 행만 보여 주므로 `All`에 특별 처리가 필요 없습니다. calc 함수는 읽는 사람에게 소스가 그대로 보이기 때문에 외부 헬퍼 없이 자기 완결적이어야 합니다. 그래서 공통 정규화는 헬퍼 대신 `scoped`에 있습니다.
 
 ## 데이터 형식
 

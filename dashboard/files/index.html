@@ -1,10 +1,10 @@
 <link rel="stylesheet" href="styles.css">
 
 <div class="gt">
-  <header class="gt-head">
+  <header>
     <h1 class="gt-title" id="title">Language mistake tracker</h1>
-    <p class="gt-takeaway" id="takeaway">Most common mistake: <b class="dash-skeleton" data-source="by_category" data-field="category" data-where="language=All&amp;rank=1">—</b>, <b class="dash-skeleton" data-source="by_category" data-field="count" data-where="language=All&amp;rank=1">—</b> of <b class="dash-skeleton" data-source="totals" data-field="total" data-where="language=All">—</b> corrections (<span class="dash-skeleton" data-source="by_category" data-field="share" data-where="language=All&amp;rank=1">—</span>).</p>
-    <p class="gt-tip" id="tip" data-source="guides"></p>
+    <p class="gt-takeaway" id="takeaway">Most common mistake: <b class="dash-skeleton" data-source="by_category" data-field="category" data-where="scope=All&amp;rank=1">—</b>, <b class="dash-skeleton" data-source="by_category" data-field="count" data-where="scope=All&amp;rank=1">—</b> of <b class="dash-skeleton" data-source="totals" data-field="total" data-where="scope=All">—</b> corrections (<span class="dash-skeleton" data-source="by_category" data-field="share" data-where="scope=All&amp;rank=1">—</span>).</p>
+    <p class="gt-trick" id="trick" data-source="guides"></p>
   </header>
 
   <div class="gt-langs" id="langs" aria-label="Language"></div>
@@ -22,17 +22,17 @@
     </div>
   </section>
 
-  <section class="gt-card gt-section" id="guides-card">
+  <section class="gt-card" id="guides-card">
     <h2 id="rules">Rules and memory tricks</h2>
     <p class="gt-note">One card per mistake type, most frequent first: the rule, a trick to remember it, and your own examples.</p>
     <div class="gt-guides dash-skeleton" id="guides" data-source="guides by_category"></div>
   </section>
 
   <section class="gt-tiles" id="tiles">
-    <div class="gt-card"><p class="gt-tile-label">Corrections logged</p><p class="gt-tile-value dash-skeleton" data-source="totals" data-field="total" data-where="language=All">—</p></div>
-    <div class="gt-card"><p class="gt-tile-label">Mistake types</p><p class="gt-tile-value dash-skeleton" data-source="totals" data-field="categories" data-where="language=All">—</p></div>
-    <div class="gt-card"><p class="gt-tile-label">Days with corrections</p><p class="gt-tile-value dash-skeleton" data-source="totals" data-field="days" data-where="language=All">—</p></div>
-    <div class="gt-card"><p class="gt-tile-label">Tracking since</p><p class="gt-tile-value dash-skeleton" data-source="totals" data-field="since" data-where="language=All">—</p></div>
+    <div class="gt-card"><p class="gt-tile-label">Corrections logged</p><p class="gt-tile-value dash-skeleton" data-source="totals" data-field="total" data-where="scope=All">—</p></div>
+    <div class="gt-card"><p class="gt-tile-label">Mistake types</p><p class="gt-tile-value dash-skeleton" data-source="totals" data-field="categories" data-where="scope=All">—</p></div>
+    <div class="gt-card"><p class="gt-tile-label">Days with corrections</p><p class="gt-tile-value dash-skeleton" data-source="totals" data-field="days" data-where="scope=All">—</p></div>
+    <div class="gt-card"><p class="gt-tile-label">Tracking since</p><p class="gt-tile-value dash-skeleton" data-source="totals" data-field="since" data-where="scope=All">—</p></div>
   </section>
 
   <section class="gt-grid">
@@ -57,7 +57,7 @@
       <span class="gt-filter" id="filter-label"></span>
     </div>
     <div class="gt-tablebox">
-      <table class="gt-table" id="table" data-source="corrections" data-row-key="id">
+      <table class="gt-table" id="table" data-source="scoped" data-row-key="scope,id">
         <colgroup id="cols"></colgroup>
         <thead><tr id="thead-row"></tr></thead>
         <tbody id="tbody"></tbody>
@@ -71,4 +71,3 @@
 <script src="review.js"></script>
 <script src="charts.js"></script>
 <script src="table.js"></script>
-<script src="main.js"></script>

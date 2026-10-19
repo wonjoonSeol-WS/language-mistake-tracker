@@ -1,44 +1,66 @@
 (function () {
-  const { KNOWN_LANGUAGES, PLACEHOLDER, el, fmtField, currentLang, matchRow, guideFor, topCategory } = window.LMT;
+  const { el, fmtInt, fmtPct, fmtDay, parseDay, currentScope, okRows, guideFor } = window.LMT;
+  const KNOWN_LANGUAGES = ['English', 'Japanese', 'Korean'];
+  // The dashboard runtime reads a lone em dash as "no value" and styles it as empty.
+  const PLACEHOLDER = '—';
 
-  function drawLangs() {
-    const t = dash.data('totals');
-    const g = dash.data('guides');
-    const present = new Set([
-      ...(t.status === 'ok' ? t.data || [] : []).map(r => r.language),
-      ...(g.status === 'ok' ? g.data || [] : []).map(r => r.language)
+  function formatField(field, value) {
+    if (value == null || value === '') return PLACEHOLDER;
+    if (field === 'share') return fmtPct(value);
+    if (field === 'since') return fmtDay(parseDay(value));
+    if (field === 'category') return String(value);
+    return fmtInt(value);
+  }
+
+  function matchRow(rows, where) {
+    return rows.find(r => [...where].every(([column, value]) => String(r[column]) === value));
+  }
+
+  function drawLanguageButtons() {
+    const totals = okRows('totals');
+    const logged = new Set([
+      ...(totals || []).map(r => r.scope),
+      ...(okRows('guides') || []).map(g => g.language)
     ]);
-    const extra = Array.from(present).filter(l => l !== 'All' && !KNOWN_LANGUAGES.includes(l)).sort();
-    const lang = currentLang();
-    document.getElementById('langs').replaceChildren(...['All', ...KNOWN_LANGUAGES, ...extra].map(name => {
-      const b = el('button', 'gt-btn', name === 'All' ? 'All languages' : name);
-      b.type = 'button';
-      b.setAttribute('aria-pressed', String(name === lang));
-      if (name !== 'All' && t.status === 'ok' && !present.has(name)) { b.disabled = true; b.title = 'Nothing logged yet'; }
-      b.addEventListener('click', () => { window.LMT.clearCategory(); dash.setParams({ language: name }); });
-      return b;
+    const others = [...logged].filter(name => name !== 'All' && !KNOWN_LANGUAGES.includes(name)).sort();
+    const scope = currentScope();
+    document.getElementById('langs').replaceChildren(...['All', ...KNOWN_LANGUAGES, ...others].map(name => {
+      const button = el('button', 'gt-btn', name === 'All' ? 'All languages' : name);
+      button.type = 'button';
+      button.setAttribute('aria-pressed', String(name === scope));
+      if (totals && name !== 'All' && !logged.has(name)) {
+        button.disabled = true;
+        button.title = 'Nothing logged yet';
+      }
+      button.addEventListener('click', () => dash.setParams({ language: name, category: null }));
+      return button;
     }));
   }
 
   function fillMarks() {
-    const lang = currentLang();
     document.querySelectorAll('.gt [data-source][data-field][data-where]').forEach(mark => {
       const where = new URLSearchParams(mark.getAttribute('data-where'));
-      where.set('language', lang);
+      where.set('scope', currentScope());
       mark.setAttribute('data-where', where.toString());
       const d = dash.data(mark.getAttribute('data-source'));
-      if (d.status === 'loading') { mark.textContent = PLACEHOLDER; return; }
+      if (d.status === 'loading') return;
       mark.classList.remove('dash-skeleton');
-      const row = d.status === 'ok' ? matchRow(d.data || [], where.toString()) : null;
+      const row = matchRow(okRows(mark.getAttribute('data-source')) || [], where);
       const field = mark.getAttribute('data-field');
-      mark.textContent = row ? fmtField(field, row[field]) : PLACEHOLDER;
+      mark.textContent = row ? formatField(field, row[field]) : PLACEHOLDER;
     });
-
-    const top = topCategory(lang);
-    document.getElementById('takeaway').hidden = dash.data('by_category').status === 'ok' && !top;
-    const guide = top ? guideFor(lang, top.category) : null;
-    document.getElementById('tip').textContent = guide ? 'Memory trick: ' + guide.mnemonic : '';
   }
 
-  Object.assign(window.LMT, { drawLangs, fillMarks });
+  function drawTakeaway() {
+    const scope = currentScope();
+    const categories = okRows('by_category');
+    const top = categories && categories.find(r => r.scope === scope && r.rank === 1);
+    document.getElementById('takeaway').hidden = Boolean(categories) && !top;
+    const guide = top && guideFor(scope, top.category);
+    document.getElementById('trick').textContent = guide ? 'Memory trick: ' + guide.mnemonic : '';
+  }
+
+  dash.onData(drawLanguageButtons);
+  dash.onData(fillMarks);
+  dash.onData(drawTakeaway);
 })();

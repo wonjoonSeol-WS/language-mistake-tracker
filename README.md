@@ -77,7 +77,6 @@ dashboard/
     review.js              top mistakes, repeated mistakes, guide cards
     charts.js              mistakes-by-type and per-day charts
     table.js               corrections table: columns, resizing, search, type filter
-    main.js                redraws every panel when data changes
 skill/language-coach/      the correcting and logging skill
 INSTALL.md                 step-by-step install instructions Claude follows
 examples/                  sample corrections and guides
@@ -86,19 +85,19 @@ data/                      your own data, git-ignored
 
 ## How the page works
 
-The page runs inside the Claude dashboard, not as a standalone HTML file. The dashboard provides `dash` (data loading, derived datasets, filters), `d3` v7 and theme variables such as `--color-fg`. It runs each script in its own scope, so the files share code through `window.LMT`.
+The page runs inside the Claude dashboard, not as a standalone HTML file. The dashboard provides `dash` (data loading, derived datasets, filters), `d3` v7 and theme variables such as `--color-fg`. It runs each script in its own scope, so the files share code through `window.LMT`, and each panel file registers its own `dash.onData` redraw.
 
 Every chart and number comes from these derived datasets:
 
 | calc | input | holds |
 |---|---|---|
-| `scoped` | corrections | each correction under its language and under `All`, with `day` normalized |
-| `by_category` | scoped | count, share, rank and latest example per (language, category) |
-| `by_day` | scoped | corrections per (language, day) |
-| `totals` | scoped | total, mistake types, active days and first day per language |
-| `repeats` | scoped | rules corrected more than once per language |
+| `scoped` | corrections | each correction twice, under `scope` = its language and `scope` = `All`; blank language becomes English, `day` is `YYYY-MM-DD` |
+| `by_category` | scoped | count, share, rank and latest example per (scope, category) |
+| `by_day` | scoped | corrections per (scope, day) |
+| `totals` | scoped | total, mistake types, active days and first day per scope |
+| `repeats` | scoped | rules corrected more than once per scope |
 
-A calc's function must be self-contained because readers can see its source, so shared normalization lives in `scoped` instead of a helper.
+The language buttons set the `language` filter, and every panel shows the rows whose `scope` equals it, so `All` needs no special case. A calc's function must be self-contained because readers can see its source, so shared normalization lives in `scoped` instead of a helper.
 
 ## Data format
 

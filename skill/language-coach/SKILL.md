@@ -31,6 +31,7 @@ Log right after giving fixes, when the Artifact and ArtifactData tools are avail
 3. Append one row per fix to that CSV: `id,date,language,category,original,corrected,rule`.
    - `id`: the highest existing id plus one, then counting up.
    - `date`: today, `YYYY-MM-DD`.
+   - `language`: the language's English name, capitalized (`English`, `Japanese`, `Korean`). The dashboard matches these names exactly.
    - `category`: one of Articles, Missing words, Prepositions, Pronouns, Singular vs plural, Spelling, Subject-verb agreement, Uncountable nouns, Verb forms & patterns, Word choice & idioms, Word order. Add a new category only when none fits.
    - `rule`: if the CSV already has a row for the same mistake, copy its rule text exactly. The dashboard counts repeats by matching rule text.
    - Quote any field holding a comma or a quote, doubling inner quotes.
@@ -44,4 +45,6 @@ Log right after giving fixes, when the Artifact and ArtifactData tools are avail
    }
    ```
 
-If a write is refused because the version changed, start again from step 1. Mention the logging in one short line at most.
+6. `Artifact` `delete` with `url` = `TRACKER_URL` and `path` = the old asset id from step 1, so replaced copies of the CSV do not pile up.
+
+If step 5 is refused because the version changed, delete the asset you uploaded in step 4 and start again from step 1. Mention the logging in one short line at most.

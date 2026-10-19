@@ -1,52 +1,45 @@
 (function () {
-  const { el, currentLang } = window.LMT;
+  const { el, currentScope, okRows } = window.LMT;
+  const MIN_COLUMN_WIDTH = 56;
 
-  const COLUMNS = [
-    { key: 'date',      label: 'Date',      width: 104, cls: 'gt-nowrap gt-muted gt-date' },
-    { key: 'language',  label: 'Language',  width: 96,  cls: 'gt-nowrap' },
-    { key: 'category',  label: 'Type',      width: 170, cls: 'gt-nowrap' },
-    { key: 'original',  label: 'You wrote', width: 230, cls: 'gt-wrong' },
-    { key: 'corrected', label: 'Fix',       width: 240, cls: 'gt-right' },
-    { key: 'rule',      label: 'Why',       width: 340, cls: 'gt-muted' }
-  ];
-  const MIN_COL_WIDTH = 56;
+  const columns = [
+    { key: 'date',      label: 'Date',      defaultWidth: 104, cellClass: 'gt-nowrap gt-muted gt-date' },
+    { key: 'language',  label: 'Language',  defaultWidth: 96,  cellClass: 'gt-nowrap' },
+    { key: 'category',  label: 'Type',      defaultWidth: 170, cellClass: 'gt-nowrap' },
+    { key: 'original',  label: 'You wrote', defaultWidth: 230, cellClass: 'gt-wrong' },
+    { key: 'corrected', label: 'Fix',       defaultWidth: 240, cellClass: 'gt-right' },
+    { key: 'rule',      label: 'Why',       defaultWidth: 340, cellClass: 'gt-muted' }
+  ].map(column => ({ ...column, width: column.defaultWidth, node: el('col') }));
 
   const table = document.getElementById('table');
+  const tbody = document.getElementById('tbody');
   const search = document.getElementById('search');
   const filterLabel = document.getElementById('filter-label');
-  const colWidths = Object.fromEntries(COLUMNS.map(c => [c.key, c.width]));
-  const colNodes = COLUMNS.map(() => el('col'));
-  let category = null;
 
-  function applyColWidths() {
-    COLUMNS.forEach((c, i) => { colNodes[i].style.width = colWidths[c.key] + 'px'; });
-    table.style.width = d3.sum(COLUMNS, c => colWidths[c.key]) + 'px';
+  function applyColumnWidths() {
+    columns.forEach(column => { column.node.style.width = column.width + 'px'; });
+    table.style.width = d3.sum(columns, column => column.width) + 'px';
   }
 
   function resizeHandle(column) {
     const handle = el('span', 'gt-resizer');
     handle.title = 'Drag to resize, double-click to reset';
-    handle.addEventListener('pointerdown', down => {
-      down.preventDefault();
-      down.stopPropagation();
-      const startX = down.clientX, startW = colWidths[column.key];
-      handle.setPointerCapture(down.pointerId);
-      handle.classList.add('is-active');
-      const move = ev => {
-        colWidths[column.key] = Math.max(MIN_COL_WIDTH, Math.round(startW + ev.clientX - startX));
-        applyColWidths();
-      };
-      const up = () => {
-        handle.classList.remove('is-active');
-        handle.removeEventListener('pointermove', move);
-        handle.removeEventListener('pointerup', up);
-        handle.removeEventListener('pointercancel', up);
-      };
-      handle.addEventListener('pointermove', move);
-      handle.addEventListener('pointerup', up);
-      handle.addEventListener('pointercancel', up);
+    let startX, startWidth;
+    d3.select(handle).call(d3.drag()
+      .on('start', ev => {
+        startX = ev.x;
+        startWidth = column.width;
+        handle.classList.add('is-active');
+      })
+      .on('drag', ev => {
+        column.width = Math.max(MIN_COLUMN_WIDTH, Math.round(startWidth + ev.x - startX));
+        applyColumnWidths();
+      })
+      .on('end', () => handle.classList.remove('is-active')));
+    handle.addEventListener('dblclick', () => {
+      column.width = column.defaultWidth;
+      applyColumnWidths();
     });
-    handle.addEventListener('dblclick', () => { colWidths[column.key] = column.width; applyColWidths(); });
     return handle;
   }
 
@@ -57,57 +50,54 @@
     return th;
   }
 
-  function setCategory(cat) {
-    category = cat;
-    filterLabel.textContent = cat ? 'Showing type: ' + cat : '';
-  }
-
-  function clearCategory() {
-    setCategory(null);
-  }
-
-  function showCategory(cat) {
-    setCategory(cat);
-    drawTable();
-    document.getElementById('list-card').scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }
-
   function matchesSearch(row, query) {
-    return !query || COLUMNS.some(c => String(row[c.key] ?? '').toLowerCase().includes(query));
+    return !query || columns.some(column => String(row[column.key] ?? '').toLowerCase().includes(query));
   }
 
-  function tableRow(correction) {
+  function tableRow(row) {
     const tr = el('tr');
-    tr.setAttribute('data-key', String(correction.id));
-    tr.append(...COLUMNS.map(c => el('td', c.cls, correction[c.key] ?? '')));
+    tr.setAttribute('data-key', [row.scope, row.id].map(encodeURIComponent).join(','));
+    tr.append(...columns.map(column => el('td', column.cellClass, row[column.key] ?? '')));
+    return tr;
+  }
+
+  function messageRow(className, text) {
+    const td = el('td', className, text);
+    td.colSpan = columns.length;
+    const tr = el('tr');
+    tr.append(td);
     return tr;
   }
 
   function drawTable() {
-    const tbody = document.getElementById('tbody');
+    const category = dash.params().category;
+    filterLabel.textContent = category ? 'Showing type: ' + category : '';
     tbody.replaceChildren();
-    const d = dash.data('corrections');
-    if (d.status !== 'ok') return;
-    const lang = currentLang();
+    if (dash.data('scoped').status === 'error') {
+      tbody.append(messageRow('gt-fail', 'Failed to load'));
+      return;
+    }
+    const rows = okRows('scoped');
+    if (!rows) return;
     const query = search.value.trim().toLowerCase();
-    const rows = (d.data || [])
-      .filter(r => lang === 'All' || (r.language || 'English') === lang)
+    const visible = rows
+      .filter(r => r.scope === currentScope())
       .filter(r => !category || r.category === category)
       .filter(r => matchesSearch(r, query))
-      .sort((a, b) => String(b.date).localeCompare(String(a.date)) || +b.id - +a.id);
-    tbody.append(...rows.map(tableRow));
+      .sort((a, b) => b.day.localeCompare(a.day) || b.id - a.id);
+    tbody.append(...(visible.length ? visible.map(tableRow) : [messageRow('gt-empty', 'No corrections match')]));
   }
 
-  document.getElementById('cols').replaceChildren(...colNodes);
-  document.getElementById('thead-row').replaceChildren(...COLUMNS.map(headerCell));
-  applyColWidths();
+  document.getElementById('cols').replaceChildren(...columns.map(column => column.node));
+  document.getElementById('thead-row').replaceChildren(...columns.map(headerCell));
+  applyColumnWidths();
 
   search.addEventListener('input', drawTable);
   document.getElementById('clear').addEventListener('click', () => {
     search.value = '';
-    clearCategory();
+    dash.setParams({ category: null });
     drawTable();
   });
 
-  Object.assign(window.LMT, { drawTable, clearCategory, showCategory });
+  dash.onData(drawTable);
 })();
