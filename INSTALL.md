@@ -1,14 +1,22 @@
 # Install steps for Claude
 
-The user asked you to install the Language mistake tracker. Run these steps in Claude Code, in order. Reply to the user in the language they wrote to you in.
+The user asked you to install the Language mistake tracker. Run these steps in order, in the Claude app or in Claude Code. Reply to the user in the language they wrote to you in.
 
 ## 1. Get the repository
 
-If the current directory is not this repository, clone `https://github.com/wonjoonSeol-WS/language-mistake-tracker` into your scratchpad directory and work from there.
+If the current directory is not this repository, download it with bash (not web fetch) into your working or scratchpad directory:
+
+```sh
+curl -L -o language-mistake-tracker.zip https://github.com/wonjoonSeol-WS/language-mistake-tracker/archive/refs/heads/main.zip
+unzip -q language-mistake-tracker.zip
+cd language-mistake-tracker-main
+```
+
+If the download is blocked, tell the user to turn on **Code execution and file creation** and **Allow network egress** at https://claude.ai/settings/capabilities and to retry in a new chat.
 
 ## 2. Create the dashboard
 
-1. Call `Artifact` with `action: "quickstart"` and `intent: "other"`, then create an artifact from the Dashboard type it names, titled `Language mistake tracker`.
+1. Create a new artifact from the Dashboard artifact type, titled `Language mistake tracker`. In Claude Code, call `Artifact` with `action: "quickstart"` and `intent: "other"` to find that type.
 2. Keep the new artifact's URL. Below it is called `TRACKER_URL`.
 
 ## 3. Upload the starting data
@@ -30,22 +38,18 @@ Make one `ArtifactData` `batch` call to `TRACKER_URL` with these `set` writes:
 
 ## 5. Build the skill
 
-1. Copy `skill/language-coach/` into your scratchpad directory.
+1. Copy `skill/language-coach/` into your working or scratchpad directory.
 2. In the copied `SKILL.md`, replace `TRACKER_URL` with the real URL.
 3. Ask the user which languages they are learning (default: English) and update **Learning languages** in the copy.
-4. Zip the copied folder as `language-coach.zip` in the scratchpad directory. Also copy the zip to `~/Downloads/` so the user has it.
+4. Zip the copied folder as `language-coach.zip`. In Claude Code, also copy the zip to `~/Downloads/` so the user has it.
 
 ## 6. Add the skill to the user's Claude account
 
-An account skill works in the Claude app and syncs to Claude Code, so it is the only copy needed.
+An account skill works in the Claude app and syncs to Claude Code, so it is the only copy needed. Use the first option you can:
 
-If the Claude in Chrome tools are available:
-
-1. Open `https://claude.ai/settings`, then **Customize > Skills**, then **Add > Upload skill**.
-2. Upload the scratchpad zip to the file input with the file upload tool. It cannot read `~/Downloads`, so use the scratchpad copy.
-3. Check that the preview shows `language-coach`, click **Upload**, and confirm the skill page opens with the toggle on.
-
-Without browser tools, copy the skill folder to `~/.claude/skills/language-coach/` so Claude Code can use it now, and tell the user to upload `~/Downloads/language-coach.zip` under **Settings > Customize > Skills**. Once they have uploaded it, delete the local folder, since the account copy syncs and two copies would both run.
+1. **A tool that saves skills to the user's account:** save the built skill with it.
+2. **Browser tools (for example Claude in Chrome):** open `https://claude.ai/settings`, go to **Customize > Skills > Add > Upload skill**, upload the zip from your working or scratchpad directory (the upload tool cannot read `~/Downloads`), check that the preview shows `language-coach`, and click **Upload**.
+3. **Neither:** give the user `language-coach.zip` as a file to download, and tell them to upload it under **Settings > Customize > Skills > Add > Upload skill**. In Claude Code, also copy the skill folder to `~/.claude/skills/language-coach/` so it works right away, and delete that folder once the account copy is uploaded, since both copies would run.
 
 Then ask the user before adding this line, with their languages filled in, to their personal preferences in the Claude app and to `~/.claude/CLAUDE.md`: `When I write in English, use the language-coach skill to correct my mistakes and log them.`
 

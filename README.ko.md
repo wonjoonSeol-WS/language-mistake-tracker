@@ -11,15 +11,21 @@ Claude가 대화 중에 고쳐 준 외국어 실수를 모아 복습 자료로 �
 
 ## 설치
 
-### 빠른 설치
+### 빠른 설치 (Claude 앱, 휴대폰, Claude Code 모두 가능)
 
-Claude Code를 열고 다음 한 줄을 보냅니다.
+시작 전에 한 번만 (Claude 앱만 해당):
+
+1. 브라우저에서 [claude.ai Settings > Capabilities](https://claude.ai/settings/capabilities)를 엽니다.
+2. **Code execution and file creation**과 **Allow network egress**를 켭니다.
+3. **새 대화**를 시작합니다. 이미 열려 있던 대화에는 새 설정이 적용되지 않습니다.
+
+그다음 새 대화에 아래 문장을 그대로 붙여 넣습니다.
 
 ```
-https://github.com/wonjoonSeol-WS/language-mistake-tracker 의 INSTALL.md를 따라 설치해 줘
+Use bash (not web fetch) to download https://github.com/wonjoonSeol-WS/language-mistake-tracker/archive/refs/heads/main.zip, unzip it, and install it for me by following INSTALL.md inside.
 ```
 
-Claude가 대시보드를 만들고 스킬을 Claude 계정에 추가해 줍니다. 계정에 추가된 스킬은 Claude 앱과 Claude Code 모두에서 동작합니다. Claude in Chrome 확장이 있으면 Claude가 직접 업로드하고, 없으면 `~/Downloads/language-coach.zip`을 만들어 두니 **Settings > Customize > Skills**에서 올리면 됩니다.
+Claude가 대시보드를 만들고 language-coach 스킬을 Claude 계정에 추가해 줍니다. 계정에 추가된 스킬은 Claude 앱과 Claude Code 모두에서 동작합니다. Claude가 스킬을 직접 추가하지 못하면 `language-coach.zip`을 내려받을 수 있게 주니, **Settings > Customize > Skills**에서 올리면 됩니다.
 
 ### 직접 설치
 

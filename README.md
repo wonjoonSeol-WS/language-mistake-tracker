@@ -11,15 +11,21 @@ It has two parts:
 
 ## Installation
 
-### Quick install
+### Quick install (Claude app, phones too, or Claude Code)
 
-Open Claude Code and send:
+Before you start (once, Claude app only):
+
+1. In a browser, open [claude.ai Settings > Capabilities](https://claude.ai/settings/capabilities).
+2. Turn on **Code execution and file creation** and **Allow network egress**.
+3. Start a **new chat**. Chats that were already open don't pick up the new settings.
+
+Then paste this into the new chat:
 
 ```
-Install https://github.com/wonjoonSeol-WS/language-mistake-tracker by following its INSTALL.md
+Use bash (not web fetch) to download https://github.com/wonjoonSeol-WS/language-mistake-tracker/archive/refs/heads/main.zip, unzip it, and install it for me by following INSTALL.md inside.
 ```
 
-Claude creates your dashboard and adds the skill to your Claude account, which makes it work in both the Claude app and Claude Code. With the Claude in Chrome extension it uploads the skill itself; without it, Claude saves `~/Downloads/language-coach.zip` for you to upload under **Settings > Customize > Skills**.
+Claude creates your dashboard and adds the language-coach skill to your Claude account, so it works in the Claude app and in Claude Code. If it cannot add the skill itself, it gives you `language-coach.zip` to upload under **Settings > Customize > Skills**.
 
 ### Manual installation
 
