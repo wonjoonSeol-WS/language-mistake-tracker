@@ -1,0 +1,617 @@
+<style>
+.gt { max-width: 72rem; margin-inline: auto; font-family: var(--font-anthropic-sans); color: var(--color-fg); }
+.gt-head { margin-bottom: var(--cds-gap-md); }
+.gt-title { font-family: var(--font-anthropic-serif); font-weight: 400; font-size: var(--cds-font-size-title); margin: 0 0 var(--cds-gap-xs); }
+.gt-takeaway { margin: 0; font-size: var(--cds-font-size-body); }
+.gt .gt-takeaway b { font-weight: 600; }
+.gt-tip { margin: var(--cds-gap-xs) 0 0; font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+.gt-langs { display: flex; flex-wrap: wrap; gap: var(--cds-gap-xs); margin-bottom: var(--cds-gap-md); }
+.gt-lang { font: inherit; font-size: var(--cds-font-size-caption); padding: var(--cds-pad-xs) var(--cds-pad-sm); border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); background: transparent; color: var(--color-fg); cursor: pointer; }
+.gt-lang[aria-pressed="true"] { background: var(--color-panel); border-color: var(--color-fg-muted); font-weight: var(--cds-font-weight-medium); }
+.gt-lang:disabled { color: var(--color-fg-muted); cursor: default; opacity: .6; }
+.gt-tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 10rem), 1fr)); gap: var(--cds-gap-md); margin-bottom: var(--cds-gap-md); }
+.gt-card { background: var(--color-panel); border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); padding: var(--cds-pad-lg); position: relative; min-width: 0; }
+.gt-tile-label { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); margin: 0 0 var(--cds-gap-xs); }
+.gt-tile-value { font-family: var(--font-anthropic-serif); font-weight: 400; font-size: var(--cds-font-size-title); font-variant-numeric: tabular-nums; margin: 0; min-height: 1.2em; }
+.gt-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr)); gap: var(--cds-gap-md); margin-bottom: var(--cds-gap-md); }
+.gt-card h2 { font-size: var(--cds-font-size-heading); font-weight: var(--cds-font-weight-medium); margin: 0; }
+.gt-note { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); margin: var(--cds-gap-xs) 0 var(--cds-gap-md); }
+.gt-chart { position: relative; }
+#chart-cat { min-height: 280px; }
+#chart-day { min-height: 180px; }
+.gt-empty { display: flex; align-items: center; justify-content: center; min-height: inherit; color: var(--color-fg-muted); font-size: var(--cds-font-size-caption); }
+.gt-fail { display: flex; align-items: center; justify-content: center; gap: var(--cds-gap-xs); min-height: inherit; color: var(--color-fg-muted); font-size: var(--cds-font-size-caption); }
+.gt-fail::before { content: ""; width: .375rem; height: .375rem; border-radius: 50%; background: var(--color-bad); }
+.gt-tip-pop { position: absolute; pointer-events: none; background: var(--cds-surface-popover); border: 1px solid var(--cds-border); border-radius: var(--cds-radius); box-shadow: var(--cds-shadow-popover); padding: var(--cds-pad-xs) var(--cds-pad-sm); font-size: var(--cds-font-size-caption); white-space: nowrap; display: none; z-index: 2; }
+.gt-tip-pop .k { color: var(--cds-text-secondary); }
+.gt-tools { display: flex; flex-wrap: wrap; gap: var(--cds-gap-sm); align-items: center; margin-bottom: var(--cds-gap-sm); }
+.gt-search { flex: 1 1 14rem; min-width: 0; font: inherit; font-size: var(--cds-font-size-body); padding: var(--cds-pad-xs) var(--cds-pad-sm); border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); background: var(--color-bg); color: var(--color-fg); }
+.gt-clear { font: inherit; font-size: var(--cds-font-size-caption); padding: var(--cds-pad-xs) var(--cds-pad-sm); border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); background: transparent; color: var(--color-fg); cursor: pointer; }
+.gt-filter { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+.gt-tablebox { max-height: 34rem; overflow: auto; }
+.gt-table { table-layout: fixed; border-collapse: collapse; font-size: var(--cds-font-size-body); }
+.gt-table th { position: sticky; top: 0; background: var(--color-panel); text-align: left; font-weight: var(--cds-font-weight-medium); font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); padding: var(--cds-pad-xs) var(--cds-pad-sm); border-bottom: 1px solid var(--color-border-line); overflow: visible; white-space: nowrap; user-select: none; }
+.gt-table td { padding: var(--cds-pad-sm); border-bottom: 1px solid var(--color-border-line); vertical-align: top; overflow-wrap: anywhere; }
+.gt-resizer { position: absolute; top: 0; right: -4px; width: 8px; height: 100%; cursor: col-resize; touch-action: none; z-index: 1; }
+.gt-table th:last-child .gt-resizer { right: 0; }
+.gt-resizer::after { content: ""; position: absolute; top: 25%; bottom: 25%; left: 3px; width: 2px; border-radius: 1px; background: var(--color-border-line); }
+.gt-resizer:hover::after, .gt-resizer.is-active::after { background: var(--color-fg-muted); }
+.gt-review { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr)); gap: var(--cds-gap-md); margin-bottom: var(--cds-gap-md); }
+.gt-rv-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--cds-gap-md); min-height: 11rem; }
+.gt-rv-top { display: flex; justify-content: space-between; align-items: baseline; gap: var(--cds-gap-sm); }
+.gt-rv-name { font-weight: var(--cds-font-weight-medium); }
+.gt-rv-count { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.gt-rv-rule { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); margin: var(--cds-gap-xs) 0; }
+.gt-rv-ex { font-size: var(--cds-font-size-body); margin: 0; }
+.gt-rv-ex .o { color: var(--color-bad); text-decoration: line-through; }
+.gt-rv-ex .a { color: var(--color-fg-muted); }
+.gt-rv-ex .f { color: var(--color-ok); font-weight: 600; }
+.gt-guides { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr)); gap: var(--cds-gap-md); min-height: 12rem; }
+.gt-guide { border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); padding: var(--cds-pad-md); background: var(--color-bg); display: flex; flex-direction: column; gap: var(--cds-gap-xs); min-width: 0; }
+.gt-guide h3 { margin: 0; font-size: var(--cds-font-size-body); font-weight: var(--cds-font-weight-medium); }
+.gt-guide-meta { display: flex; justify-content: space-between; gap: var(--cds-gap-sm); font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+.gt-guide-rule { margin: 0; font-size: var(--cds-font-size-caption); }
+.gt-guide-trick { margin: 0; padding: var(--cds-pad-xs) var(--cds-pad-sm); border-left: 3px solid var(--color-fg-muted); background: var(--color-panel); border-radius: 0 var(--cds-radius) var(--cds-radius) 0; font-size: var(--cds-font-size-caption); }
+.gt .gt-guide-trick b { font-weight: 600; }
+.gt-guide-ex { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 2px; font-size: var(--cds-font-size-caption); }
+.gt-guide-ex .o { color: var(--color-bad); text-decoration: line-through; }
+.gt-guide-ex .a { color: var(--color-fg-muted); }
+.gt-guide-ex .f { color: var(--color-ok); font-weight: 600; }
+.gt-orig { color: var(--color-bad); }
+.gt-fix { color: var(--color-ok); font-weight: 600; }
+.gt-type, .gt-lng { white-space: nowrap; }
+.gt-date { white-space: nowrap; color: var(--color-fg-muted); font-variant-numeric: tabular-nums; }
+.gt-why { color: var(--color-fg-muted); }
+.gt [data-dash-source-state=empty] { color: transparent; }
+.gt [data-dash-source-state=refreshing] { opacity: .5; transition: opacity var(--cds-dur-slow); }
+</style>
+
+<div class="gt">
+  <header class="gt-head">
+    <h1 class="gt-title" id="title">Language mistake tracker</h1>
+    <p class="gt-takeaway" id="takeaway">Most common mistake: <b class="dash-skeleton" data-source="by_category" data-field="category" data-where="language=All&amp;rank=1">—</b>, <b class="dash-skeleton" data-source="by_category" data-field="count" data-where="language=All&amp;rank=1">—</b> of <b class="dash-skeleton" data-source="totals" data-field="total" data-where="language=All">—</b> corrections (<span class="dash-skeleton" data-source="by_category" data-field="share" data-where="language=All&amp;rank=1">—</span>).</p>
+    <p class="gt-tip" id="tip" data-source="guides"></p>
+  </header>
+
+  <div class="gt-langs" id="langs" aria-label="Language"></div>
+
+  <section class="gt-review" id="review">
+    <div class="gt-card" id="review-top-card">
+      <h2 id="quick-review">Top mistakes to watch</h2>
+      <p class="gt-note">Your three most common types: the rule, and your latest slip.</p>
+      <ul class="gt-rv-list dash-skeleton" id="review-top" data-source="cheatsheet guides"></ul>
+    </div>
+    <div class="gt-card" id="review-rep-card">
+      <h2 id="repeats">Made more than once</h2>
+      <p class="gt-note">The same rule, corrected again. These are the habits to break.</p>
+      <ul class="gt-rv-list dash-skeleton" id="review-repeats" data-source="repeats"></ul>
+    </div>
+  </section>
+
+  <section class="gt-card" id="guides-card" style="margin-bottom: var(--cds-gap-md);">
+    <h2 id="rules">Rules and memory tricks</h2>
+    <p class="gt-note">One card per mistake type, most frequent first: the rule, a trick to remember it, and your own examples.</p>
+    <div class="gt-guides dash-skeleton" id="guides" data-source="guides by_category"></div>
+  </section>
+
+  <section class="gt-tiles" id="tiles">
+    <div class="gt-card"><p class="gt-tile-label">Corrections logged</p><p class="gt-tile-value dash-skeleton" data-source="totals" data-field="total" data-where="language=All">—</p></div>
+    <div class="gt-card"><p class="gt-tile-label">Mistake types</p><p class="gt-tile-value dash-skeleton" data-source="totals" data-field="categories" data-where="language=All">—</p></div>
+    <div class="gt-card"><p class="gt-tile-label">Days with corrections</p><p class="gt-tile-value dash-skeleton" data-source="totals" data-field="days" data-where="language=All">—</p></div>
+    <div class="gt-card"><p class="gt-tile-label">Tracking since</p><p class="gt-tile-value dash-skeleton" data-source="totals" data-field="since" data-where="language=All">—</p></div>
+  </section>
+
+  <section class="gt-grid">
+    <div class="gt-card" id="types-card">
+      <h2 id="by-type">Mistakes by type</h2>
+      <p class="gt-note">All time. Click a bar to list those corrections below.</p>
+      <div class="gt-chart dash-skeleton" id="chart-cat" data-source="by_category"></div>
+    </div>
+    <div class="gt-card" id="days-card">
+      <h2 id="per-day">Corrections per day</h2>
+      <p class="gt-note">How many fixes each day of chatting needed.</p>
+      <div class="gt-chart dash-skeleton" id="chart-day" data-source="by_day"></div>
+    </div>
+  </section>
+
+  <section class="gt-card" id="list-card">
+    <h2 id="all">All corrections</h2>
+    <p class="gt-note">Newest first: what you wrote, the fix, and why.</p>
+    <div class="gt-tools">
+      <input class="gt-search" id="search" type="search" placeholder="Search words or rules" aria-label="Search corrections">
+      <button class="gt-clear" id="clear" type="button">Clear</button>
+      <span class="gt-filter" id="filter-label"></span>
+    </div>
+    <div class="gt-tablebox">
+      <table class="gt-table" id="table" data-source="corrections" data-row-key="id">
+        <colgroup id="cols"><col data-col="date"><col data-col="language"><col data-col="category"><col data-col="original"><col data-col="corrected"><col data-col="rule"></colgroup>
+        <thead><tr><th data-field="date">Date<span class="gt-resizer" data-col="date" title="Drag to resize, double-click to reset"></span></th><th data-field="language">Language<span class="gt-resizer" data-col="language" title="Drag to resize, double-click to reset"></span></th><th data-field="category">Type<span class="gt-resizer" data-col="category" title="Drag to resize, double-click to reset"></span></th><th data-field="original">You wrote<span class="gt-resizer" data-col="original" title="Drag to resize, double-click to reset"></span></th><th data-field="corrected">Fix<span class="gt-resizer" data-col="corrected" title="Drag to resize, double-click to reset"></span></th><th data-field="rule">Why<span class="gt-resizer" data-col="rule" title="Drag to resize, double-click to reset"></span></th></tr></thead>
+        <tbody id="tbody"></tbody>
+      </table>
+    </div>
+  </section>
+</div>
+
+<script>
+(function () {
+  const KNOWN_LANGUAGES = ['English', 'Japanese', 'Korean'];
+  function guideFor(lang, category) {
+    const g = dash.data('guides');
+    if (g.status !== 'ok') return null;
+    const list = (g.data || []).filter(x => x.category === category);
+    return list.find(x => x.language === lang) || list.find(x => x.language === 'English') || list[0] || null;
+  }
+
+  dash.calc('by_category', {
+    inputs: ['corrections'],
+    title: 'Mistakes by type',
+    description: 'Counts each mistake type per language (and for all languages), with its share and rank, most common first.',
+    fn: (corrections) => {
+      const groups = {};
+      corrections.forEach(r => {
+        const lang = r.language || 'English';
+        ['All', lang].forEach(l => {
+          groups[l] = groups[l] || {};
+          groups[l][r.category] = (groups[l][r.category] || 0) + 1;
+        });
+      });
+      const out = [];
+      Object.keys(groups).forEach(l => {
+        const counts = groups[l];
+        const total = Object.values(counts).reduce((a, b) => a + b, 0);
+        Object.keys(counts)
+          .map(c => ({ language: l, category: c, count: counts[c], share: total ? counts[c] / total : 0 }))
+          .sort((a, b) => b.count - a.count || a.category.localeCompare(b.category))
+          .forEach((row, i) => out.push(Object.assign(row, { rank: i + 1 })));
+      });
+      return out;
+    }
+  });
+
+  dash.calc('by_day', {
+    inputs: ['corrections'],
+    title: 'Corrections per day',
+    description: 'Counts corrections logged on each day, per language and for all languages.',
+    fn: (corrections) => {
+      const counts = {};
+      corrections.forEach(r => {
+        const d = String(r.date).slice(0, 10);
+        ['All', r.language || 'English'].forEach(l => {
+          const k = l + '|' + d;
+          counts[k] = (counts[k] || 0) + 1;
+        });
+      });
+      return Object.keys(counts).sort().map(k => {
+        const [language, date] = k.split('|');
+        return { language: language, date: date, count: counts[k] };
+      });
+    }
+  });
+
+  dash.calc('totals', {
+    inputs: ['corrections'],
+    title: 'Totals',
+    description: 'Per language and for all languages: total corrections, mistake types, days with corrections and the first day logged.',
+    fn: (corrections) => {
+      const langs = ['All'].concat(Array.from(new Set(corrections.map(r => r.language || 'English'))).sort());
+      return langs.map(l => {
+        const rows = l === 'All' ? corrections : corrections.filter(r => (r.language || 'English') === l);
+        const days = Array.from(new Set(rows.map(r => String(r.date).slice(0, 10)))).sort();
+        return { language: l, total: rows.length, categories: new Set(rows.map(r => r.category)).size, days: days.length, since: days[0] || null };
+      });
+    }
+  });
+
+  dash.calc('cheatsheet', {
+    inputs: ['corrections'],
+    title: 'Quick review',
+    description: 'Per language (and for all languages): each mistake type with its count, rank and most recent example.',
+    fn: (corrections) => {
+      const groups = {};
+      corrections.forEach(r => {
+        ['All', r.language || 'English'].forEach(l => {
+          const key = l + '|' + r.category;
+          const g = groups[key] = groups[key] || { language: l, category: r.category, count: 0, latest: null };
+          g.count += 1;
+          if (!g.latest || +r.id > +g.latest.id) g.latest = r;
+        });
+      });
+      const byLang = {};
+      Object.values(groups).forEach(g => { (byLang[g.language] = byLang[g.language] || []).push(g); });
+      const out = [];
+      Object.keys(byLang).forEach(l => byLang[l]
+        .sort((a, b) => b.count - a.count || a.category.localeCompare(b.category))
+        .forEach((g, i) => out.push({
+          language: l, category: g.category, count: g.count, rank: i + 1,
+          example_original: g.latest.original, example_corrected: g.latest.corrected, example_rule: g.latest.rule
+        })));
+      return out;
+    }
+  });
+
+  dash.calc('repeats', {
+    inputs: ['corrections'],
+    title: 'Made more than once',
+    description: 'Per language (and for all languages): rules you were corrected on more than once, how many times, and the latest example.',
+    fn: (corrections) => {
+      const groups = {};
+      corrections.forEach(r => {
+        ['All', r.language || 'English'].forEach(l => {
+          const key = l + '|' + r.rule;
+          const g = groups[key] = groups[key] || { language: l, rule: r.rule, times: 0, latest: null };
+          g.times += 1;
+          if (!g.latest || +r.id > +g.latest.id) g.latest = r;
+        });
+      });
+      return Object.values(groups)
+        .filter(g => g.times > 1)
+        .sort((a, b) => b.times - a.times || +b.latest.id - +a.latest.id)
+        .map(g => ({
+          language: g.language, rule: g.rule, times: g.times, category: g.latest.category,
+          example_original: g.latest.original, example_corrected: g.latest.corrected
+        }));
+    }
+  });
+
+  const fmtInt = d3.format(',');
+  const fmtPct = d3.format('.0%');
+  const fmtDay = d3.utcFormat('%b %-d, %Y');
+  const fmtDayShort = d3.utcFormat('%b %-d');
+  const parseDay = s => new Date(String(s).slice(0, 10) + 'T00:00:00Z');
+  const currentLang = () => dash.params().language || 'All';
+
+  function fmtField(field, v) {
+    if (v == null || v === '') return '—';
+    if (field === 'share') return fmtPct(+v);
+    if (field === 'since') return fmtDay(parseDay(v));
+    if (field === 'category') return String(v);
+    return fmtInt(+v);
+  }
+
+  function drawLangs() {
+    const box = document.getElementById('langs');
+    const t = dash.data('totals');
+    const gd = dash.data('guides');
+    const present = new Set([].concat(
+      t.status === 'ok' ? (t.data || []).map(r => r.language) : [],
+      gd.status === 'ok' ? (gd.data || []).map(r => r.language) : []));
+    const names = ['All'].concat(KNOWN_LANGUAGES, Array.from(present).filter(l => l !== 'All' && !KNOWN_LANGUAGES.includes(l)).sort());
+    const lang = currentLang();
+    box.replaceChildren(...names.map(n => {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'gt-lang';
+      b.textContent = n === 'All' ? 'All languages' : n;
+      b.setAttribute('aria-pressed', String(n === lang));
+      if (n !== 'All' && t.status === 'ok' && !present.has(n)) { b.disabled = true; b.title = 'Nothing logged yet'; }
+      b.addEventListener('click', () => { category = null; filterLabel.textContent = ''; dash.setParams({ language: n }); });
+      return b;
+    }));
+  }
+
+  function fillMarks() {
+    const lang = currentLang();
+    document.querySelectorAll('.gt [data-source][data-field][data-where]').forEach(el => {
+      const src = el.getAttribute('data-source');
+      const ranked = src === 'by_category';
+      el.setAttribute('data-where', 'language=' + encodeURIComponent(lang) + (ranked ? '&rank=1' : ''));
+      const d = dash.data(src);
+      if (d.status === 'ok') {
+        const row = (d.data || []).find(r => r.language === lang && (!ranked || +r.rank === 1));
+        const field = el.getAttribute('data-field');
+        el.textContent = row ? fmtField(field, row[field]) : '—';
+        el.classList.remove('dash-skeleton');
+      } else {
+        el.textContent = '—';
+        if (d.status !== 'loading') el.classList.remove('dash-skeleton');
+      }
+    });
+    const c = dash.data('by_category');
+    const top = c.status === 'ok' && (c.data || []).find(r => r.language === lang && +r.rank === 1);
+    const guide = top ? guideFor(lang, top.category) : null;
+    document.getElementById('tip').textContent = guide ? 'Memory trick: ' + guide.mnemonic : '';
+  }
+
+  function exampleLine(orig, fix) {
+    const p = document.createElement('p'); p.className = 'gt-rv-ex';
+    const o = document.createElement('span'); o.className = 'o'; o.textContent = orig == null ? '' : String(orig);
+    const a = document.createElement('span'); a.className = 'a'; a.textContent = ' → ';
+    const f = document.createElement('span'); f.className = 'f'; f.textContent = fix == null ? '' : String(fix);
+    p.append(o, a, f);
+    return p;
+  }
+  function reviewItem(name, count, rule, orig, fix) {
+    const li = document.createElement('li');
+    const top = document.createElement('div'); top.className = 'gt-rv-top';
+    const n = document.createElement('span'); n.className = 'gt-rv-name'; n.textContent = name;
+    const c = document.createElement('span'); c.className = 'gt-rv-count'; c.textContent = count;
+    top.append(n, c);
+    const r = document.createElement('p'); r.className = 'gt-rv-rule'; r.textContent = rule || '';
+    li.append(top, r, exampleLine(orig, fix));
+    return li;
+  }
+  function drawReviewList(id, src, build, emptyText) {
+    const box = document.getElementById(id);
+    const d = dash.data(src);
+    if (d.status === 'loading') return;
+    box.classList.remove('dash-skeleton');
+    box.replaceChildren();
+    if (d.status !== 'ok') {
+      if (d.status === 'error') { const li = document.createElement('li'); li.className = 'gt-fail'; li.textContent = 'Failed to load'; box.appendChild(li); }
+      return;
+    }
+    const items = build(d.data || []);
+    if (!items.length) { const li = document.createElement('li'); li.className = 'gt-empty'; li.textContent = emptyText; box.appendChild(li); return; }
+    items.forEach(it => box.appendChild(it));
+  }
+  function drawReview() {
+    const lang = currentLang();
+    drawReviewList('review-top', 'cheatsheet', rows => rows
+      .filter(r => r.language === lang && +r.rank <= 3)
+      .sort((a, b) => +a.rank - +b.rank)
+      .map(r => {
+        const g = guideFor(lang, r.category);
+        return reviewItem(r.category, fmtInt(+r.count) + ' times', g ? g.mnemonic : r.example_rule, r.example_original, r.example_corrected);
+      }),
+      'No corrections in this language yet');
+    drawReviewList('review-repeats', 'repeats', rows => rows
+      .filter(r => r.language === lang)
+      .slice(0, 5)
+      .map(r => reviewItem(r.category, '×' + fmtInt(+r.times), r.rule, r.example_original, r.example_corrected)),
+      'No repeated mistakes yet');
+  }
+
+  const COL_DEFAULTS = { date: 104, language: 96, category: 170, original: 230, corrected: 240, rule: 340 };
+  const colWidths = Object.assign({}, COL_DEFAULTS);
+  function applyCols() {
+    document.querySelectorAll('#cols col').forEach(c => { c.style.width = colWidths[c.dataset.col] + 'px'; });
+    document.getElementById('table').style.width = Object.values(colWidths).reduce((a, b) => a + b, 0) + 'px';
+  }
+  document.querySelectorAll('.gt-resizer').forEach(h => {
+    h.addEventListener('pointerdown', ev => {
+      ev.preventDefault();
+      ev.stopPropagation();
+      const key = h.dataset.col, startX = ev.clientX, startW = colWidths[key], pid = ev.pointerId;
+      h.setPointerCapture(pid);
+      h.classList.add('is-active');
+      const move = e => { colWidths[key] = Math.max(56, Math.round(startW + e.clientX - startX)); applyCols(); };
+      const up = () => {
+        if (h.hasPointerCapture(pid)) h.releasePointerCapture(pid);
+        h.classList.remove('is-active');
+        h.removeEventListener('pointermove', move);
+        h.removeEventListener('pointerup', up);
+        h.removeEventListener('pointercancel', up);
+      };
+      h.addEventListener('pointermove', move);
+      h.addEventListener('pointerup', up);
+      h.addEventListener('pointercancel', up);
+    });
+    h.addEventListener('dblclick', () => { colWidths[h.dataset.col] = COL_DEFAULTS[h.dataset.col]; applyCols(); });
+  });
+  applyCols();
+
+  function drawGuides() {
+    const box = document.getElementById('guides');
+    const g = dash.data('guides');
+    if (g.status === 'loading') return;
+    box.classList.remove('dash-skeleton');
+    box.replaceChildren();
+    if (g.status !== 'ok') {
+      if (g.status === 'error') noteLine(box, 'gt-fail', 'Failed to load');
+      return;
+    }
+    const lang = currentLang();
+    const c = dash.data('by_category');
+    const counts = {};
+    if (c.status === 'ok') (c.data || []).forEach(r => { counts[r.language + '|' + r.category] = +r.count; });
+    const list = (g.data || [])
+      .filter(x => lang === 'All' || x.language === lang)
+      .map(x => ({ x: x, n: counts[x.language + '|' + x.category] || 0 }))
+      .sort((a, b) => b.n - a.n || (+a.x.id) - (+b.x.id));
+    if (!list.length) { noteLine(box, 'gt-empty', 'No rules for this language yet'); return; }
+    list.forEach(({ x, n }) => {
+      const card = document.createElement('article');
+      card.className = 'gt-guide';
+      const meta = document.createElement('div'); meta.className = 'gt-guide-meta';
+      const m1 = document.createElement('span'); m1.textContent = x.category + (lang === 'All' ? ' (' + x.language + ')' : '');
+      const m2 = document.createElement('span'); m2.textContent = n ? fmtInt(n) + ' corrections' : 'Flagged by you';
+      meta.append(m1, m2);
+      const h = document.createElement('h3'); h.textContent = x.title;
+      const rule = document.createElement('p'); rule.className = 'gt-guide-rule'; rule.textContent = x.rule;
+      const trick = document.createElement('p'); trick.className = 'gt-guide-trick';
+      const tb = document.createElement('b'); tb.textContent = 'Memory trick: ';
+      trick.append(tb, document.createTextNode(x.mnemonic || ''));
+      const ex = document.createElement('ul'); ex.className = 'gt-guide-ex';
+      String(x.examples || '').split(' | ').filter(Boolean).forEach(pair => {
+        const parts = pair.split(' → ');
+        const li = document.createElement('li');
+        const o = document.createElement('span'); o.className = 'o'; o.textContent = parts[0] || '';
+        li.appendChild(o);
+        if (parts.length > 1) {
+          const a = document.createElement('span'); a.className = 'a'; a.textContent = ' → ';
+          const f = document.createElement('span'); f.className = 'f'; f.textContent = parts.slice(1).join(' → ');
+          li.append(a, f);
+        }
+        ex.appendChild(li);
+      });
+      card.append(meta, h, rule, trick, ex);
+      box.appendChild(card);
+    });
+  }
+
+  function tooltipFor(box) {
+    let t = box.querySelector('.gt-tip-pop');
+    if (!t) { t = document.createElement('div'); t.className = 'gt-tip-pop'; box.appendChild(t); }
+    return t;
+  }
+  function showTip(box, t, lines, x, y) {
+    t.replaceChildren();
+    lines.forEach((ln, i) => { const div = document.createElement('div'); if (i === 0) div.className = 'k'; div.textContent = ln; t.appendChild(div); });
+    t.style.display = 'block';
+    const bw = box.clientWidth, tw = t.offsetWidth, th = t.offsetHeight;
+    let left = x + 12; if (left + tw > bw) left = Math.max(0, x - tw - 12);
+    let top = y - th - 8; if (top < 0) top = y + 12;
+    t.style.left = left + 'px'; t.style.top = top + 'px';
+  }
+  function noteLine(box, cls, text) {
+    const f = document.createElement('div'); f.className = cls; f.textContent = text; box.appendChild(f);
+  }
+  function resetBox(box) {
+    box.querySelectorAll('svg, .gt-fail, .gt-empty').forEach(n => n.remove());
+    const tip = tooltipFor(box); tip.style.display = 'none';
+    return tip;
+  }
+
+  function drawCat() {
+    const box = document.getElementById('chart-cat');
+    const tip = resetBox(box);
+    const d = dash.data('by_category');
+    if (d.status === 'loading') return;
+    box.classList.remove('dash-skeleton');
+    if (d.status !== 'ok') { if (d.status === 'error') noteLine(box, 'gt-fail', 'Failed to load'); return; }
+    const lang = currentLang();
+    const rows = (d.data || []).filter(r => r.language === lang).sort((a, b) => +a.rank - +b.rank);
+    if (!rows.length) { noteLine(box, 'gt-empty', 'No corrections in this language yet'); return; }
+    const W = Math.max(240, box.clientWidth);
+    const rowH = 32, labelH = 14, barH = 12, pad = 2;
+    const H = pad + rows.length * rowH;
+    const svg = d3.select(box).insert('svg', ':first-child')
+      .attr('width', '100%').attr('viewBox', `0 0 ${W} ${H}`)
+      .attr('role', 'img').attr('aria-label', 'Corrections by mistake type');
+    const maxCount = d3.max(rows, r => +r.count) || 1;
+    const probe = svg.append('text').style('font-size', 'var(--cds-font-size-caption)').text(fmtInt(maxCount) + ' (100%)');
+    const endW = probe.node().getComputedTextLength() + 10;
+    probe.remove();
+    const x = d3.scaleLinear([0, maxCount], [0, Math.max(40, W - endW)]);
+    const g = svg.selectAll('g.gt-row').data(rows).join('g').attr('class', 'gt-row')
+      .attr('transform', (r, i) => `translate(0,${pad + i * rowH})`);
+    g.append('text').attr('x', 0).attr('y', labelH - 3)
+      .style('fill', 'var(--color-fg)').style('font-size', 'var(--cds-font-size-caption)')
+      .text(r => r.category);
+    g.append('rect').attr('x', 0).attr('y', labelH + 2).attr('height', barH).attr('rx', 4)
+      .attr('width', r => Math.max(2, x(+r.count)))
+      .style('fill', (r, i) => i === 0 ? dash.colors[0] : 'var(--cds-chart-muted)');
+    g.append('text').attr('x', r => Math.max(2, x(+r.count)) + 6).attr('y', labelH + barH)
+      .style('fill', 'var(--color-fg-muted)').style('font-size', 'var(--cds-font-size-caption)')
+      .style('font-variant-numeric', 'tabular-nums')
+      .text(r => fmtInt(+r.count) + ' (' + fmtPct(+r.share) + ')');
+    g.append('rect').attr('x', 0).attr('y', 0).attr('width', W).attr('height', rowH)
+      .style('fill', 'transparent').style('cursor', 'pointer')
+      .on('mousemove', (ev, r) => {
+        const [mx, my] = d3.pointer(ev, box);
+        showTip(box, tip, [r.category, fmtInt(+r.count) + ' corrections', fmtPct(+r.share) + ' of ' + (lang === 'All' ? 'all' : lang)], mx, my);
+      })
+      .on('mouseleave', () => { tip.style.display = 'none'; })
+      .on('click', (ev, r) => { setCategory(r.category, true); });
+  }
+
+  function drawDay() {
+    const box = document.getElementById('chart-day');
+    const tip = resetBox(box);
+    const d = dash.data('by_day');
+    if (d.status === 'loading') return;
+    box.classList.remove('dash-skeleton');
+    if (d.status !== 'ok') { if (d.status === 'error') noteLine(box, 'gt-fail', 'Failed to load'); return; }
+    const lang = currentLang();
+    const rows = (d.data || []).filter(r => r.language === lang)
+      .map(r => ({ date: String(r.date).slice(0, 10), count: +r.count }))
+      .sort((a, b) => a.date.localeCompare(b.date));
+    if (!rows.length) { noteLine(box, 'gt-empty', 'No corrections in this language yet'); return; }
+    const W = Math.max(240, box.clientWidth), H = 180;
+    const svg = d3.select(box).insert('svg', ':first-child')
+      .attr('width', '100%').attr('viewBox', `0 0 ${W} ${H}`)
+      .attr('role', 'img').attr('aria-label', 'Corrections per day');
+    const maxC = d3.max(rows, r => r.count) || 1;
+    const y = d3.scaleLinear([0, maxC], [H - 24, 8]).nice();
+    const ticks = y.ticks(3).filter(Number.isInteger);
+    const probe = svg.append('text').style('font-size', 'var(--cds-font-size-caption)').text(fmtInt(d3.max(ticks) || 0));
+    const ml = probe.node().getComputedTextLength() + 10;
+    probe.remove();
+    const x = d3.scaleBand(rows.map(r => r.date), [ml, W - 4]).padding(0.3);
+    svg.append('g').selectAll('line').data(ticks).join('line')
+      .attr('x1', ml).attr('x2', W - 4).attr('y1', t => y(t)).attr('y2', t => y(t))
+      .style('stroke', 'var(--cds-chart-grid)').style('stroke-width', 1);
+    svg.append('g').selectAll('text').data(ticks).join('text')
+      .attr('x', ml - 6).attr('y', t => y(t) + 4).attr('text-anchor', 'end')
+      .style('fill', 'var(--color-fg-muted)').style('font-size', 'var(--cds-font-size-caption)')
+      .text(t => fmtInt(t));
+    const bw = Math.min(32, x.bandwidth());
+    svg.append('g').selectAll('rect').data(rows).join('rect')
+      .attr('x', r => x(r.date) + (x.bandwidth() - bw) / 2).attr('width', bw)
+      .attr('y', r => y(r.count)).attr('height', r => Math.max(0, y(0) - y(r.count))).attr('rx', 4)
+      .style('fill', dash.colors[0]);
+    svg.append('line').attr('x1', ml).attr('x2', W - 4).attr('y1', y(0)).attr('y2', y(0))
+      .style('stroke', 'var(--cds-chart-axis)');
+    const maxLabels = Math.max(1, Math.floor((W - ml) / 60));
+    const step = Math.ceil(rows.length / maxLabels);
+    svg.append('g').selectAll('text').data(rows.filter((r, i) => i % step === 0)).join('text')
+      .attr('x', r => x(r.date) + x.bandwidth() / 2).attr('y', H - 6).attr('text-anchor', 'middle')
+      .style('fill', 'var(--color-fg-muted)').style('font-size', 'var(--cds-font-size-caption)')
+      .text(r => fmtDayShort(parseDay(r.date)));
+    svg.append('g').selectAll('rect').data(rows).join('rect')
+      .attr('x', r => x(r.date)).attr('width', x.bandwidth()).attr('y', 0).attr('height', H - 20)
+      .style('fill', 'transparent')
+      .on('mousemove', (ev, r) => {
+        const [mx, my] = d3.pointer(ev, box);
+        showTip(box, tip, [fmtDay(parseDay(r.date)), fmtInt(r.count) + ' corrections'], mx, my);
+      })
+      .on('mouseleave', () => { tip.style.display = 'none'; });
+  }
+
+  let query = '';
+  let category = null;
+  const search = document.getElementById('search');
+  const filterLabel = document.getElementById('filter-label');
+
+  function setCategory(cat, scroll) {
+    category = cat;
+    filterLabel.textContent = cat ? 'Showing type: ' + cat : '';
+    drawTable();
+    if (scroll) document.getElementById('list-card').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  function drawTable() {
+    const tbody = document.getElementById('tbody');
+    tbody.replaceChildren();
+    const d = dash.data('corrections');
+    if (d.status !== 'ok') return;
+    const lang = currentLang();
+    const q = query.trim().toLowerCase();
+    const rows = (d.data || []).slice().sort((a, b) =>
+      String(b.date).localeCompare(String(a.date)) || (+b.id) - (+a.id));
+    rows
+      .filter(r => lang === 'All' || (r.language || 'English') === lang)
+      .filter(r => !category || r.category === category)
+      .filter(r => !q || ['language', 'category', 'original', 'corrected', 'rule', 'date']
+        .some(k => String(r[k] == null ? '' : r[k]).toLowerCase().includes(q)))
+      .forEach(r => {
+        const tr = document.createElement('tr');
+        tr.setAttribute('data-key', String(r.id));
+        [[r.date, 'gt-date'], [r.language, 'gt-lng'], [r.category, 'gt-type'], [r.original, 'gt-orig'], [r.corrected, 'gt-fix'], [r.rule, 'gt-why']]
+          .forEach(([txt, cls]) => {
+            const td = document.createElement('td');
+            td.className = cls;
+            td.textContent = txt == null ? '' : String(txt);
+            tr.appendChild(td);
+          });
+        tbody.appendChild(tr);
+      });
+  }
+
+  search.addEventListener('input', () => { query = search.value; drawTable(); });
+  document.getElementById('clear').addEventListener('click', () => {
+    search.value = ''; query = ''; setCategory(null, false);
+  });
+
+  dash.onData(() => {
+    drawLangs();
+    fillMarks();
+    drawReview();
+    drawGuides();
+    drawCat();
+    drawDay();
+    drawTable();
+  });
+})();
+</script>
+

@@ -1,0 +1,13 @@
+{
+  "description": "One guide per mistake type and language: the rule, a memory trick and example fixes, written by Claude from your corrections (plus ones you flag, like 웬/왠).",
+  "source": {
+    "kind": "file",
+    "name": "guides.json",
+    "url": "/_blob/c2bc4fff1fb675b07bc6fc41b862a43a"
+  },
+  "title": "Rules and memory tricks",
+  "updated": {
+    "at": "2026-10-18T03:00:00Z",
+    "by": "Claude"
+  }
+}

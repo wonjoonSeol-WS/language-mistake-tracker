@@ -1,0 +1,13 @@
+{
+  "description": "Each correction Claude gave you in chat: date, language, mistake type, your wording, the fix and the rule. New corrections are added over time.",
+  "source": {
+    "kind": "file",
+    "name": "corrections.csv",
+    "url": "/_blob/7eae1477dda6ab3b996d9b9ce96babd8"
+  },
+  "title": "Your language corrections",
+  "updated": {
+    "at": "2026-10-19T13:40:00Z",
+    "by": "Claude"
+  }
+}
