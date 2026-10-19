@@ -9,27 +9,46 @@ It has two parts:
 - **Dashboard** (`dashboard/`): a Claude Dashboard artifact that shows the corrections.
 - **Skill** (`skill/language-coach/`): tells Claude to correct your writing in every chat and log each fix to the dashboard.
 
-## Installation
+## Install and update (in the Claude app, phones too)
 
-### Quick install (Claude app, phones too, or Claude Code)
+### Before you start (once)
 
-Before you start (once, Claude app only):
+1. In your **browser** (not the app), open [claude.ai Settings > Capabilities](https://claude.ai/settings/capabilities). Sign in first if you aren't.
+2. Turn on **Code execution and file creation**.
+3. Turn on **Allow network egress**.
+   - This option **isn't in the app's settings**; turn it on in a browser. Once it's on, it applies to the app too.
+   - Some accounts have it off by default.
+4. Go back to the app and start a **new chat**. Chats that were already open don't pick up the new setting.
+5. If a new chat is still blocked, the setting can take **a few minutes** to apply. Try again in about 5 minutes.
 
-1. In a browser, open [claude.ai Settings > Capabilities](https://claude.ai/settings/capabilities).
-2. Turn on **Code execution and file creation** and **Allow network egress**.
-3. Start a **new chat**. Chats that were already open don't pick up the new settings.
+![Claude Settings > Capabilities: turn on Code execution and file creation and Allow network egress](docs/images/egress-setting.png)
 
-Then paste this into the new chat:
+### Install
+
+Paste this into a new chat as is.
 
 ```
-Use bash (not web fetch) to download https://github.com/wonjoonSeol-WS/language-mistake-tracker/archive/refs/heads/main.zip, unzip it, and install it for me by following INSTALL.md inside.
+Install https://github.com/wonjoonSeol-WS/language-mistake-tracker by following its INSTALL.md
 ```
 
-Claude creates your dashboard and adds the language-coach skill to your Claude account, so it works in the Claude app and in Claude Code. If it cannot add the skill itself, it gives you `language-coach.zip` to upload under **Settings > Customize > Skills**.
+Claude creates your dashboard and adds the language-coach skill to your Claude account, so it works in the Claude app and in Claude Code. Open the dashboard link it gives you. If Claude cannot add the skill itself, it gives you `language-coach.zip` to upload under **Settings > Customize > Skills**.
 
-### Manual installation
+To check it works, send a sentence with a mistake, such as `She go to work yesterday`. The reply should end with a **Language fixes** section, and the dashboard shows the new row after a refresh.
 
-#### 1. Create the dashboard
+### Update
+
+Your corrections are tied to the dashboard link. **A new dashboard starts empty**, so always update the one you already have. Replace the link on the last line with your dashboard's address.
+
+```
+Update my Language mistake tracker from https://github.com/wonjoonSeol-WS/language-mistake-tracker by following the "Updating" section of its INSTALL.md.
+My dashboard: (paste your dashboard link here)
+```
+
+Claude replaces the dashboard's page and refreshes the skill. Your corrections and guides stay as they are.
+
+## Manual install (Claude Code)
+
+### 1. Create the dashboard
 
 You need Claude Code signed in to the same Claude account you use in the Claude app.
 
@@ -54,7 +73,7 @@ To start empty, keep only the header line of the example CSV. The example guides
 | `datasets/corrections`, `datasets/guides` | `dashboard/datasets/*.json`, with `source.url` set to the uploaded file |
 | `files/<name>` (`{"text": ...}`) | `dashboard/files/<name>` |
 
-#### 2. Turn it on for every chat
+### 2. Turn it on for every chat
 
 1. In `skill/language-coach/SKILL.md`, replace `TRACKER_URL` with your dashboard link. If you are learning more than English, add those languages under **Learning languages**.
 2. Add the skill to your Claude account. Zip the `skill/language-coach` folder, then upload it in the Claude app under **Settings > Customize > Skills**. Account skills sync to Claude Code too (they appear under `~/.claude/skills/synced/`). To use it only in Claude Code, copy the folder to `~/.claude/skills/language-coach/` instead.
@@ -64,7 +83,7 @@ To start empty, keep only the header line of the example CSV. The example guides
 
 Menu names can differ by plan and app version. On Team and Enterprise plans, an admin may need to allow custom skills.
 
-#### 3. Check it works
+### 3. Check it works
 
 Send Claude a sentence with a mistake, such as `She go to work yesterday`. The reply should end with a **Language fixes** section, and the dashboard should show the new row after a refresh.
 
@@ -86,6 +105,7 @@ dashboard/
 skill/language-coach/      the correcting and logging skill
 INSTALL.md                 step-by-step install instructions Claude follows
 examples/                  sample corrections and guides
+docs/images/               README screenshots
 data/                      your own data, git-ignored
 ```
 

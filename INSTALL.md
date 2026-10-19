@@ -56,3 +56,14 @@ Then ask the user before adding this line, with their languages filled in, to th
 ## 7. Hand over
 
 Give the user the dashboard link. Tell them to send a sentence with a mistake (for example `She go to work yesterday`) to check that a **Language fixes** section appears and a row shows up on the dashboard.
+
+## Updating
+
+Use this section instead of steps 2 to 4 when the user asks to update and gives their dashboard link (`TRACKER_URL`). Never create a new dashboard: their corrections live in the existing one.
+
+1. Get the repository as in step 1.
+2. Read the dashboard's `files` collection. In one batch write, `set` every file in `dashboard/files/` as `files/<name>` (`{"text": ...}`), and `delete` any `files/<name>` the repository no longer has.
+3. Read `dash/params` and add any key from `dashboard/params.json` it lacks, keeping the values it already has.
+4. Leave `dash/meta` and the `datasets` documents unchanged, so the user's data stays.
+5. Build the skill as in step 5, with the same `TRACKER_URL`, and add it to the account as in step 6, replacing the existing `language-coach` skill rather than adding a second one. If you cannot replace it, tell the user to delete the old one under **Settings > Customize > Skills**.
+6. Tell the user what changed and to reload the dashboard.
