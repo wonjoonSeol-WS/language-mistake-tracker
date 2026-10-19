@@ -11,7 +11,19 @@ Claude가 대화 중에 고쳐 준 외국어 실수를 모아 복습 자료로 �
 
 ## 설치
 
-### 1. 대시보드 만들기
+### 빠른 설치
+
+Claude Code를 열고 다음 한 줄을 보냅니다.
+
+```
+https://github.com/wonjoonSeol-WS/language-mistake-tracker 의 INSTALL.md를 따라 설치해 줘
+```
+
+Claude가 대시보드를 만들고, Claude Code용 스킬을 설치하고, 직접 할 수 없는 한 단계(Claude 앱 **Settings > Customize > Skills**에서 스킬 업로드)를 위해 `~/Downloads/language-coach.zip`을 준비해 줍니다.
+
+### 직접 설치
+
+#### 1. 대시보드 만들기
 
 Claude 앱과 같은 계정으로 로그인한 Claude Code가 필요합니다.
 
@@ -36,7 +48,7 @@ Claude가 대시보드 링크(`https://claude.ai/artifact/...`)를 알려 줍니
 | `datasets/corrections`, `datasets/guides` | `dashboard/datasets/*.json` (`source.url`은 올린 파일 주소로) |
 | `files/<이름>` (`{"text": ...}`) | `dashboard/files/<이름>` |
 
-### 2. 모든 대화에서 켜기
+#### 2. 모든 대화에서 켜기
 
 1. `skill/language-coach/SKILL.md`의 `TRACKER_URL`을 내 대시보드 링크로 바꿉니다. 영어 말고 다른 언어도 배우고 있다면 **Learning languages**에 추가합니다.
 2. 스킬을 Claude 계정에 추가합니다. `skill/language-coach` 폴더를 zip으로 묶어 Claude 앱의 **Settings > Customize > Skills**에서 업로드합니다. 계정에 올린 스킬은 Claude Code에도 동기화됩니다(`~/.claude/skills/synced/` 아래에 보입니다). Claude Code에서만 쓰려면 대신 폴더를 `~/.claude/skills/language-coach/`로 복사합니다.
@@ -46,7 +58,7 @@ Claude가 대시보드 링크(`https://claude.ai/artifact/...`)를 알려 줍니
 
 메뉴 이름은 요금제와 앱 버전에 따라 다를 수 있습니다. Team, Enterprise 요금제에서는 관리자가 사용자 스킬을 허용해야 할 수 있습니다.
 
-### 3. 동작 확인
+#### 3. 동작 확인
 
 `She go to work yesterday`처럼 틀린 문장을 보내 봅니다. 답변 끝에 **Language fixes** 항목이 붙고, 대시보드를 새로 고치면 새 교정 기록이 보이면 정상입니다.
 
@@ -67,6 +79,7 @@ dashboard/
     table.js               교정 목록 표: 열, 너비 조절, 검색, 유형 필터
     main.js                데이터가 바뀌면 모든 패널을 다시 그림
 skill/language-coach/      교정 및 기록 스킬
+INSTALL.md                 Claude가 따라 하는 설치 절차
 examples/                  예시 교정 기록과 가이드
 data/                      내 데이터 (git에서 제외)
 ```

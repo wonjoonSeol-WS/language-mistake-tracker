@@ -11,7 +11,19 @@ It has two parts:
 
 ## Installation
 
-### 1. Create the dashboard
+### Quick install
+
+Open Claude Code and send:
+
+```
+Install https://github.com/wonjoonSeol-WS/language-mistake-tracker by following its INSTALL.md
+```
+
+Claude creates your dashboard, installs the skill for Claude Code, and prepares `~/Downloads/language-coach.zip` for the one step it cannot do: uploading the skill in the Claude app under **Settings > Customize > Skills**.
+
+### Manual installation
+
+#### 1. Create the dashboard
 
 You need Claude Code signed in to the same Claude account you use in the Claude app.
 
@@ -36,7 +48,7 @@ To start empty, keep only the header line of the example CSV. The example guides
 | `datasets/corrections`, `datasets/guides` | `dashboard/datasets/*.json`, with `source.url` set to the uploaded file |
 | `files/<name>` (`{"text": ...}`) | `dashboard/files/<name>` |
 
-### 2. Turn it on for every chat
+#### 2. Turn it on for every chat
 
 1. In `skill/language-coach/SKILL.md`, replace `TRACKER_URL` with your dashboard link. If you are learning more than English, add those languages under **Learning languages**.
 2. Add the skill to your Claude account. Zip the `skill/language-coach` folder, then upload it in the Claude app under **Settings > Customize > Skills**. Account skills sync to Claude Code too (they appear under `~/.claude/skills/synced/`). To use it only in Claude Code, copy the folder to `~/.claude/skills/language-coach/` instead.
@@ -46,7 +58,7 @@ To start empty, keep only the header line of the example CSV. The example guides
 
 Menu names can differ by plan and app version. On Team and Enterprise plans, an admin may need to allow custom skills.
 
-### 3. Check it works
+#### 3. Check it works
 
 Send Claude a sentence with a mistake, such as `She go to work yesterday`. The reply should end with a **Language fixes** section, and the dashboard should show the new row after a refresh.
 
@@ -67,6 +79,7 @@ dashboard/
     table.js               corrections table: columns, resizing, search, type filter
     main.js                redraws every panel when data changes
 skill/language-coach/      the correcting and logging skill
+INSTALL.md                 step-by-step install instructions Claude follows
 examples/                  sample corrections and guides
 data/                      your own data, git-ignored
 ```
