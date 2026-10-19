@@ -19,7 +19,7 @@ Open Claude Code and send:
 Install https://github.com/wonjoonSeol-WS/language-mistake-tracker by following its INSTALL.md
 ```
 
-Claude creates your dashboard, installs the skill for Claude Code, and prepares `~/Downloads/language-coach.zip` for the one step it cannot do: uploading the skill in the Claude app under **Settings > Customize > Skills**.
+Claude creates your dashboard and adds the skill to your Claude account, which makes it work in both the Claude app and Claude Code. With the Claude in Chrome extension it uploads the skill itself; without it, Claude saves `~/Downloads/language-coach.zip` for you to upload under **Settings > Customize > Skills**.
 
 ### Manual installation
 

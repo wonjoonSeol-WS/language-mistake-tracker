@@ -19,7 +19,7 @@ Claude Code를 열고 다음 한 줄을 보냅니다.
 https://github.com/wonjoonSeol-WS/language-mistake-tracker 의 INSTALL.md를 따라 설치해 줘
 ```
 
-Claude가 대시보드를 만들고, Claude Code용 스킬을 설치하고, 직접 할 수 없는 한 단계(Claude 앱 **Settings > Customize > Skills**에서 스킬 업로드)를 위해 `~/Downloads/language-coach.zip`을 준비해 줍니다.
+Claude가 대시보드를 만들고 스킬을 Claude 계정에 추가해 줍니다. 계정에 추가된 스킬은 Claude 앱과 Claude Code 모두에서 동작합니다. Claude in Chrome 확장이 있으면 Claude가 직접 업로드하고, 없으면 `~/Downloads/language-coach.zip`을 만들어 두니 **Settings > Customize > Skills**에서 올리면 됩니다.
 
 ### 직접 설치
 
