@@ -2,7 +2,7 @@
 
 A personal dashboard that logs the language corrections Claude gives me in chat and turns them into a review sheet: most common mistake types, repeated habits, rules with memory tricks, and a searchable list of every correction.
 
-It runs as a Claude Dashboard artifact. This repo is the source of truth for its page and data.
+It runs as a Claude Dashboard artifact. This repo holds its page and dataset definitions. The correction data itself is personal and stays out of git (`data/` is ignored).
 
 ## Layout
 
@@ -12,7 +12,7 @@ dashboard/
   meta.json             dash/meta    - dashboard title
   params.json           dash/params  - default filter (language)
   datasets/*.json       datasets/*   - where each dataset reads from
-data/
+data/                   (git-ignored, local only)
   corrections.csv       every correction: id,date,language,category,original,corrected,rule
   guides.json           one guide per (language, category): title, rule, mnemonic, examples
 ```
