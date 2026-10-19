@@ -39,7 +39,7 @@ Claude가 대시보드 링크(`https://claude.ai/artifact/...`)를 알려 줍니
 ### 2. 모든 대화에서 켜기
 
 1. `skill/language-coach/SKILL.md`의 `TRACKER_URL`을 내 대시보드 링크로 바꿉니다. 영어 말고 다른 언어도 배우고 있다면 **Learning languages**에 추가합니다.
-2. 스킬을 Claude 계정에 추가합니다. `skill/language-coach` 폴더를 zip으로 묶어 Claude 앱의 **Settings > Capabilities > Skills**에서 업로드합니다. 계정에 올린 스킬은 Claude Code에도 동기화됩니다(`~/.claude/skills/synced/` 아래에 보입니다). Claude Code에서만 쓰려면 대신 폴더를 `~/.claude/skills/language-coach/`로 복사합니다.
+2. 스킬을 Claude 계정에 추가합니다. `skill/language-coach` 폴더를 zip으로 묶어 Claude 앱의 **Settings > Customize > Skills**에서 업로드합니다. 계정에 올린 스킬은 Claude Code에도 동기화됩니다(`~/.claude/skills/synced/` 아래에 보입니다). Claude Code에서만 쓰려면 대신 폴더를 `~/.claude/skills/language-coach/`로 복사합니다.
 3. Claude가 필요하다고 판단할 때만이 아니라 매 메시지마다 동작하게 합니다.
    - Claude 앱: **Settings > Profile**의 개인 선호(personal preferences)에 다음 문장을 추가합니다. `When I write in English, use the language-coach skill to correct my mistakes and log them.`
    - Claude Code: 같은 문장을 `~/.claude/CLAUDE.md`에 추가합니다.

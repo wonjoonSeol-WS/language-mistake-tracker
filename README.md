@@ -39,7 +39,7 @@ To start empty, keep only the header line of the example CSV. The example guides
 ### 2. Turn it on for every chat
 
 1. In `skill/language-coach/SKILL.md`, replace `TRACKER_URL` with your dashboard link. If you are learning more than English, add those languages under **Learning languages**.
-2. Add the skill to your Claude account. Zip the `skill/language-coach` folder, then upload it in the Claude app under **Settings > Capabilities > Skills**. Account skills sync to Claude Code too (they appear under `~/.claude/skills/synced/`). To use it only in Claude Code, copy the folder to `~/.claude/skills/language-coach/` instead.
+2. Add the skill to your Claude account. Zip the `skill/language-coach` folder, then upload it in the Claude app under **Settings > Customize > Skills**. Account skills sync to Claude Code too (they appear under `~/.claude/skills/synced/`). To use it only in Claude Code, copy the folder to `~/.claude/skills/language-coach/` instead.
 3. Make it run on every message, not only when Claude decides it is relevant:
    - Claude app: under **Settings > Profile**, add this to your personal preferences: `When I write in English, use the language-coach skill to correct my mistakes and log them.`
    - Claude Code: add the same line to `~/.claude/CLAUDE.md`.
