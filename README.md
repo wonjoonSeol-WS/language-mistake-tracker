@@ -2,6 +2,8 @@
 
 **English** | [한국어](README.ko.md)
 
+**Claude fixes your English in every chat. This turns the fixes into a review sheet.**
+
 A Claude dashboard that turns the language corrections Claude gives you in chat into a review sheet: your most common mistake types, habits you repeat, rules with memory tricks, and a searchable list of every correction.
 
 It has two parts:
