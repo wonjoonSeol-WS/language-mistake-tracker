@@ -1,0 +1,8 @@
+{
+  "name": "language-mistake-tracker",
+  "owner": { "name": "wonjoonSeol-WS" },
+  "description": "Language coach skill that logs your corrections to a review dashboard",
+  "plugins": [
+    { "name": "language-coach", "source": "./", "description": "Corrects your writing in every chat and logs each fix to your Language mistake tracker dashboard" }
+  ]
+}

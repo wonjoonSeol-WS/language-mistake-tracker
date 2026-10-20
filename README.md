@@ -62,6 +62,17 @@ My dashboard: (paste your dashboard link here)
 
 Claude replaces the dashboard's page and refreshes the skill. Your corrections and guides stay as they are.
 
+### Skill only, as a Claude Code plugin
+
+Already have the dashboard? Add just the skill in Claude Code:
+
+```
+/plugin marketplace add wonjoonSeol-WS/language-mistake-tracker
+/plugin install language-coach@language-mistake-tracker
+```
+
+The skill finds your dashboard by its title, `Language mistake tracker`, so keep that name. Without a dashboard it only gives the fixes; use the install prompt above to create one.
+
 ## Manual install (Claude Code)
 
 ### 1. Create the dashboard
@@ -91,7 +102,7 @@ To start empty, keep only the header line of the example CSV. The example guides
 
 ### 2. Turn it on for every chat
 
-1. In `skill/language-coach/SKILL.md`, replace `TRACKER_URL` with your dashboard link. If you are learning more than English, add those languages under **Learning languages**.
+1. If you are learning more than English, add those languages under **Learning languages** in `skill/language-coach/SKILL.md`.
 2. Add the skill to your Claude account. Zip the `skill/language-coach` folder, then upload it in the Claude app under **Settings > Customize > Skills**. Account skills sync to Claude Code too (they appear under `~/.claude/skills/synced/`). To use it only in Claude Code, copy the folder to `~/.claude/skills/language-coach/` instead.
 3. Make it run on every message, not only when Claude decides it is relevant:
    - Claude app: under **Settings > Profile**, add this to your personal preferences: `When I write in English, use the language-coach skill to correct my mistakes and log them.`

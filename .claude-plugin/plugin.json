@@ -1,0 +1,8 @@
+{
+  "name": "language-coach",
+  "version": "0.1.0",
+  "description": "Corrects your writing in every chat and logs each fix to your Language mistake tracker dashboard",
+  "author": { "name": "wonjoonSeol-WS" },
+  "homepage": "https://github.com/wonjoonSeol-WS/language-mistake-tracker",
+  "skills": "./skill"
+}

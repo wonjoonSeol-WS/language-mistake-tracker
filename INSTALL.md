@@ -39,9 +39,8 @@ Make one `ArtifactData` `batch` call to `TRACKER_URL` with these `set` writes:
 ## 5. Build the skill
 
 1. Copy `skill/language-coach/` into your working or scratchpad directory.
-2. In the copied `SKILL.md`, replace `TRACKER_URL` with the real URL.
-3. Ask the user which languages they are learning (default: English) and update **Learning languages** in the copy.
-4. Zip the copied folder as `language-coach.zip`. In Claude Code, also copy the zip to `~/Downloads/` so the user has it.
+2. Ask the user which languages they are learning (default: English) and update **Learning languages** in the copy.
+3. Zip the copied folder as `language-coach.zip`. In Claude Code, also copy the zip to `~/Downloads/` so the user has it.
 
 ## 6. Add the skill to the user's Claude account
 
@@ -65,5 +64,5 @@ Use this section instead of steps 2 to 4 when the user asks to update and gives 
 2. Read the dashboard's `files` collection. In one batch write, `set` every file in `dashboard/files/` as `files/<name>` (`{"text": ...}`), and `delete` any `files/<name>` the repository no longer has.
 3. Read `dash/params` and add any key from `dashboard/params.json` it lacks, keeping the values it already has.
 4. Leave `dash/meta` and the `datasets` documents unchanged, so the user's data stays.
-5. Build the skill as in step 5, with the same `TRACKER_URL`, and add it to the account as in step 6, replacing the existing `language-coach` skill rather than adding a second one. If you cannot replace it, tell the user to delete the old one under **Settings > Customize > Skills**.
+5. Build the skill as in step 5 and add it to the account as in step 6, replacing the existing `language-coach` skill rather than adding a second one. If you cannot replace it, tell the user to delete the old one under **Settings > Customize > Skills**.
 6. Tell the user what changed and to reload the dashboard.

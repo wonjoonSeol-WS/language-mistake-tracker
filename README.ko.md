@@ -62,6 +62,17 @@ https://github.com/wonjoonSeol-WS/language-mistake-tracker 의 INSTALL.md에 있
 
 Claude가 대시보드 화면과 스킬을 새 버전으로 바꿔 줘요. 교정 기록과 가이드는 그대로 남아요.
 
+### 스킬만, Claude Code 플러그인으로
+
+대시보드가 이미 있다면 Claude Code에서 스킬만 추가합니다.
+
+```
+/plugin marketplace add wonjoonSeol-WS/language-mistake-tracker
+/plugin install language-coach@language-mistake-tracker
+```
+
+스킬은 대시보드를 제목 `Language mistake tracker`로 찾으니 이름을 바꾸지 마세요. 대시보드가 없으면 교정만 해 주니, 위의 설치 프롬프트로 먼저 만드세요.
+
 ## 직접 설치 (Claude Code)
 
 ### 1. 대시보드 만들기
@@ -91,7 +102,7 @@ Claude가 대시보드 링크(`https://claude.ai/artifact/...`)를 알려 줍니
 
 ### 2. 모든 대화에서 켜기
 
-1. `skill/language-coach/SKILL.md`의 `TRACKER_URL`을 내 대시보드 링크로 바꿉니다. 영어 말고 다른 언어도 배우고 있다면 **Learning languages**에 추가합니다.
+1. 영어 말고 다른 언어도 배우고 있다면 `skill/language-coach/SKILL.md`의 **Learning languages**에 추가합니다.
 2. 스킬을 Claude 계정에 추가합니다. `skill/language-coach` 폴더를 zip으로 묶어 Claude 앱의 **Settings > Customize > Skills**에서 업로드합니다. 계정에 올린 스킬은 Claude Code에도 동기화됩니다(`~/.claude/skills/synced/` 아래에 보입니다). Claude Code에서만 쓰려면 대신 폴더를 `~/.claude/skills/language-coach/`로 복사합니다.
 3. Claude가 필요하다고 판단할 때만이 아니라 매 메시지마다 동작하게 합니다.
    - Claude 앱: **Settings > Profile**의 개인 선호(personal preferences)에 다음 문장을 추가합니다. `When I write in English, use the language-coach skill to correct my mistakes and log them.`

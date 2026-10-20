@@ -7,7 +7,7 @@ description: Correct the user's grammar, spelling and word choice whenever they 
 
 ## Settings
 
-- Tracker dashboard: `TRACKER_URL` (replace with your dashboard's claude.ai artifact link)
+- Tracker dashboard: your artifact titled `Language mistake tracker`, found as described under Logging. Its link is called `TRACKER_URL` below.
 - Learning languages: English
 
 ## Correcting
@@ -26,25 +26,26 @@ description: Correct the user's grammar, spelling and word choice whenever they 
 
 Log right after giving fixes, when the Artifact and ArtifactData tools are available. Without them, give the fixes only.
 
-1. `ArtifactData` `get` collection `datasets`, doc `corrections` on `TRACKER_URL`. Note `source.url` (`/_blob/<asset id>`) and the document `version`.
-2. `Artifact` `read` with `url` = `TRACKER_URL` and `path` = the asset id. This saves the current CSV locally.
-3. Append one row per fix to that CSV: `id,date,language,category,original,corrected,rule`.
+1. Find the dashboard: `Artifact` `list` with `scope` = `mine`, and take the artifact titled `Language mistake tracker` (the most recently updated if there are several). If there is none, give the fixes only and tell the user to install the tracker from https://github.com/wonjoonSeol-WS/language-mistake-tracker.
+2. `ArtifactData` `get` collection `datasets`, doc `corrections` on `TRACKER_URL`. Note `source.url` (`/_blob/<asset id>`) and the document `version`.
+3. `Artifact` `read` with `url` = `TRACKER_URL` and `path` = the asset id. This saves the current CSV locally.
+4. Append one row per fix to that CSV: `id,date,language,category,original,corrected,rule`.
    - `id`: the highest existing id plus one, then counting up.
    - `date`: today, `YYYY-MM-DD`.
    - `language`: the language's English name, capitalized (`English`, `Japanese`, `Korean`). The dashboard matches these names exactly.
    - `category`: one of Articles, Missing words, Prepositions, Pronouns, Singular vs plural, Spelling, Subject-verb agreement, Uncountable nouns, Verb forms & patterns, Word choice & idioms, Word order. Add a new category only when none fits.
    - `rule`: if the CSV already has a row for the same mistake, copy its rule text exactly. The dashboard counts repeats by matching rule text.
    - Quote any field holding a comma or a quote, doubling inner quotes.
-4. `Artifact` `publish` with `url` = `TRACKER_URL`, `file_path` = the updated CSV, `asset: true`. Keep the result's `url`.
-5. `ArtifactData` `update` collection `datasets`, doc `corrections`, `if_version` from step 1, data:
+5. `Artifact` `publish` with `url` = `TRACKER_URL`, `file_path` = the updated CSV, `asset: true`. Keep the result's `url`.
+6. `ArtifactData` `update` collection `datasets`, doc `corrections`, `if_version` from step 2, data:
 
    ```json
    {
-     "source": { "kind": "file", "name": "corrections.csv", "url": "<url from step 4>" },
+     "source": { "kind": "file", "name": "corrections.csv", "url": "<url from step 5>" },
      "updated": { "at": "<now, ISO 8601>", "by": "Claude" }
    }
    ```
 
-6. `Artifact` `delete` with `url` = `TRACKER_URL` and `path` = the old asset id from step 1, so replaced copies of the CSV do not pile up.
+7. `Artifact` `delete` with `url` = `TRACKER_URL` and `path` = the old asset id from step 2, so replaced copies of the CSV do not pile up.
 
-If step 5 is refused because the version changed, delete the asset you uploaded in step 4 and start again from step 1. Mention the logging in one short line at most.
+If step 6 is refused because the version changed, delete the asset you uploaded in step 5 and start again from step 2. Mention the logging in one short line at most.
