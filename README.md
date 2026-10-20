@@ -9,6 +9,20 @@ It has two parts:
 - **Dashboard** (`dashboard/`): a Claude Dashboard artifact that shows the corrections.
 - **Skill** (`skill/language-coach/`): tells Claude to correct your writing in every chat and log each fix to the dashboard.
 
+## Preview
+
+What you get after a few chats (sample data).
+
+![Headline mistake, memory trick, top mistakes and repeated mistakes](docs/images/preview-overview.png)
+
+![Rule cards with a memory trick and your own examples](docs/images/preview-rules.png)
+
+![Mistakes by type and corrections per day](docs/images/preview-charts.png)
+
+![Searchable table of every correction](docs/images/preview-table.png)
+
+Screenshots use made-up sample data.
+
 ## Install and update (in the Claude app, phones too)
 
 ### Before you start (once)

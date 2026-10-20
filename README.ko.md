@@ -9,6 +9,20 @@ Claude가 대화 중에 고쳐 준 외국어 실수를 모아 복습 자료로 �
 - **대시보드** (`dashboard/`): 교정 내역을 보여 주는 Claude 대시보드 아티팩트
 - **스킬** (`skill/language-coach/`): 모든 대화에서 Claude가 내 문장을 교정하고, 교정 내역을 대시보드에 기록하게 하는 스킬
 
+## 미리보기
+
+몇 번 대화한 뒤 보게 되는 화면입니다 (예시 데이터).
+
+![가장 흔한 실수, 기억 팁, 자주 틀리는 유형과 반복한 실수](docs/images/preview-overview.png)
+
+![규칙과 기억 팁, 내 예문이 담긴 카드](docs/images/preview-rules.png)
+
+![유형별 실수와 일별 교정 횟수](docs/images/preview-charts.png)
+
+![모든 교정을 검색할 수 있는 표](docs/images/preview-table.png)
+
+스크린샷은 가상의 예시 데이터입니다.
+
 ## 설치와 업데이트 (Claude 앱에서, 폰도 가능)
 
 ### 준비 (처음 한 번만)
