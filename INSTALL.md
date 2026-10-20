@@ -39,8 +39,7 @@ Make one `ArtifactData` `batch` call to `TRACKER_URL` with these `set` writes:
 ## 5. Build the skill
 
 1. Copy `skill/language-coach/` into your working or scratchpad directory.
-2. Ask the user which languages they are learning (default: English) and update **Learning languages** in the copy.
-3. Zip the copied folder as `language-coach.zip`. In Claude Code, also copy the zip to `~/Downloads/` so the user has it.
+2. Zip the copied folder as `language-coach.zip`. In Claude Code, also copy the zip to `~/Downloads/` so the user has it.
 
 ## 6. Add the skill to the user's Claude account
 
@@ -50,7 +49,7 @@ An account skill works in the Claude app and syncs to Claude Code, so it is the 
 2. **Browser tools (for example Claude in Chrome):** open `https://claude.ai/settings`, go to **Customize > Skills > Add > Upload skill**, upload the zip from your working or scratchpad directory (the upload tool cannot read `~/Downloads`), check that the preview shows `language-coach`, and click **Upload**.
 3. **Neither:** give the user `language-coach.zip` as a file to download, and tell them to upload it under **Settings > Customize > Skills > Add > Upload skill**. In Claude Code, also copy the skill folder to `~/.claude/skills/language-coach/` so it works right away, and delete that folder once the account copy is uploaded, since both copies would run.
 
-Then ask the user before adding this line, with their languages filled in, to their personal preferences in the Claude app and to `~/.claude/CLAUDE.md`: `When I write in English, use the language-coach skill to correct my mistakes and log them.`
+Then ask the user which languages they are learning (default: English), and ask before adding this line with those languages filled in, to their personal preferences in the Claude app and to `~/.claude/CLAUDE.md`: `When I write in English, use the language-coach skill to correct my mistakes and log them.`
 
 ## 7. Hand over
 

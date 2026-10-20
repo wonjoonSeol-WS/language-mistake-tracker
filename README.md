@@ -71,7 +71,7 @@ Already have the dashboard? Add just the skill in Claude Code:
 /plugin install language-coach@language-mistake-tracker
 ```
 
-The skill finds your dashboard by its title, `Language mistake tracker`, so keep that name. Without a dashboard it only gives the fixes; use the install prompt above to create one.
+The skill finds your dashboard by its title, `Language mistake tracker`, so keep that name. It corrects English by default; tell Claude "I'm also learning Korean" and it remembers. Without a dashboard it only gives the fixes; use the install prompt above to create one.
 
 ## Manual install (Claude Code)
 
@@ -89,7 +89,7 @@ Then ask Claude:
 
 > Create a new Dashboard artifact named "Language mistake tracker" from this repo. Upload `examples/corrections.example.csv` and `examples/guides.example.json` as its files, write `dashboard/meta.json`, `dashboard/params.json` and `dashboard/datasets/*.json` (with the uploaded file URLs) into its store, and write every file in `dashboard/files/` as `files/<name>`.
 
-Claude replies with the dashboard's link (`https://claude.ai/artifact/...`). Keep it for step 2.
+Claude replies with the dashboard's link (`https://claude.ai/artifact/...`). Open it to see your dashboard.
 
 To start empty, keep only the header line of the example CSV. The example guides can stay; a guide with no corrections yet shows as "Flagged by you".
 
@@ -102,11 +102,11 @@ To start empty, keep only the header line of the example CSV. The example guides
 
 ### 2. Turn it on for every chat
 
-1. If you are learning more than English, add those languages under **Learning languages** in `skill/language-coach/SKILL.md`.
-2. Add the skill to your Claude account. Zip the `skill/language-coach` folder, then upload it in the Claude app under **Settings > Customize > Skills**. Account skills sync to Claude Code too (they appear under `~/.claude/skills/synced/`). To use it only in Claude Code, copy the folder to `~/.claude/skills/language-coach/` instead.
-3. Make it run on every message, not only when Claude decides it is relevant:
+1. Add the skill to your Claude account. Zip the `skill/language-coach` folder, then upload it in the Claude app under **Settings > Customize > Skills**. Account skills sync to Claude Code too (they appear under `~/.claude/skills/synced/`). To use it only in Claude Code, copy the folder to `~/.claude/skills/language-coach/` instead.
+2. Make it run on every message, not only when Claude decides it is relevant:
    - Claude app: under **Settings > Profile**, add this to your personal preferences: `When I write in English, use the language-coach skill to correct my mistakes and log them.`
    - Claude Code: add the same line to `~/.claude/CLAUDE.md`.
+   - Learning more than English? Name the languages in that line, for example `When I write in English or Korean, ...`.
 
 Menu names can differ by plan and app version. On Team and Enterprise plans, an admin may need to allow custom skills.
 

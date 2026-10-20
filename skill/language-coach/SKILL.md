@@ -8,7 +8,7 @@ description: Correct the user's grammar, spelling and word choice whenever they 
 ## Settings
 
 - Tracker dashboard: your artifact titled `Language mistake tracker`, found as described under Logging. Its link is called `TRACKER_URL` below.
-- Learning languages: English
+- Learning languages: English, plus any language the user tells you they are learning. Save the list to your memory if you have one, and use the saved list in later chats.
 
 ## Correcting
 

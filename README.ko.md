@@ -71,7 +71,7 @@ Claude가 대시보드 화면과 스킬을 새 버전으로 바꿔 줘요. 교�
 /plugin install language-coach@language-mistake-tracker
 ```
 
-스킬은 대시보드를 제목 `Language mistake tracker`로 찾으니 이름을 바꾸지 마세요. 대시보드가 없으면 교정만 해 주니, 위의 설치 프롬프트로 먼저 만드세요.
+스킬은 대시보드를 제목 `Language mistake tracker`로 찾으니 이름을 바꾸지 마세요. 기본은 영어 교정이며, Claude에게 "한국어도 배우고 있어"라고 말하면 기억합니다. 대시보드가 없으면 교정만 해 주니, 위의 설치 프롬프트로 먼저 만드세요.
 
 ## 직접 설치 (Claude Code)
 
@@ -89,7 +89,7 @@ claude
 
 > 이 저장소로 "Language mistake tracker"라는 새 Dashboard 아티팩트를 만들어 줘. `examples/corrections.example.csv`와 `examples/guides.example.json`을 파일로 올리고, `dashboard/meta.json`, `dashboard/params.json`, `dashboard/datasets/*.json`(올린 파일 URL 반영)을 저장소에 쓰고, `dashboard/files/`의 모든 파일을 `files/<이름>`으로 써 줘.
 
-Claude가 대시보드 링크(`https://claude.ai/artifact/...`)를 알려 줍니다. 2단계에서 씁니다.
+Claude가 대시보드 링크(`https://claude.ai/artifact/...`)를 알려 줍니다. 열면 대시보드가 보입니다.
 
 빈 상태로 시작하려면 예시 CSV에서 첫 줄(헤더)만 남기면 됩니다. 예시 가이드는 그대로 둬도 되고, 아직 교정 기록이 없는 가이드는 "Flagged by you"로 표시됩니다.
 
@@ -102,11 +102,11 @@ Claude가 대시보드 링크(`https://claude.ai/artifact/...`)를 알려 줍니
 
 ### 2. 모든 대화에서 켜기
 
-1. 영어 말고 다른 언어도 배우고 있다면 `skill/language-coach/SKILL.md`의 **Learning languages**에 추가합니다.
-2. 스킬을 Claude 계정에 추가합니다. `skill/language-coach` 폴더를 zip으로 묶어 Claude 앱의 **Settings > Customize > Skills**에서 업로드합니다. 계정에 올린 스킬은 Claude Code에도 동기화됩니다(`~/.claude/skills/synced/` 아래에 보입니다). Claude Code에서만 쓰려면 대신 폴더를 `~/.claude/skills/language-coach/`로 복사합니다.
-3. Claude가 필요하다고 판단할 때만이 아니라 매 메시지마다 동작하게 합니다.
+1. 스킬을 Claude 계정에 추가합니다. `skill/language-coach` 폴더를 zip으로 묶어 Claude 앱의 **Settings > Customize > Skills**에서 업로드합니다. 계정에 올린 스킬은 Claude Code에도 동기화됩니다(`~/.claude/skills/synced/` 아래에 보입니다). Claude Code에서만 쓰려면 대신 폴더를 `~/.claude/skills/language-coach/`로 복사합니다.
+2. Claude가 필요하다고 판단할 때만이 아니라 매 메시지마다 동작하게 합니다.
    - Claude 앱: **Settings > Profile**의 개인 선호(personal preferences)에 다음 문장을 추가합니다. `When I write in English, use the language-coach skill to correct my mistakes and log them.`
    - Claude Code: 같은 문장을 `~/.claude/CLAUDE.md`에 추가합니다.
+   - 영어 말고 다른 언어도 배우나요? 그 문장에 언어를 넣으세요. 예: `When I write in English or Korean, ...`
 
 메뉴 이름은 요금제와 앱 버전에 따라 다를 수 있습니다. Team, Enterprise 요금제에서는 관리자가 사용자 스킬을 허용해야 할 수 있습니다.
 
