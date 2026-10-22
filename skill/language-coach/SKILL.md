@@ -26,7 +26,7 @@ description: Correct the user's grammar, spelling and word choice whenever they 
 
 Log right after giving fixes, when the Artifact and ArtifactData tools are available. Without them, give the fixes only.
 
-1. Find the dashboard: `Artifact` `list` with `scope` = `mine`, and take the artifact titled `Language mistake tracker` (the most recently updated if there are several). If there is none, give the fixes only and tell the user to install the tracker from https://github.com/wonjoonSeol-WS/language-mistake-tracker.
+1. Find the dashboard: `Artifact` `list` with `scope` = `mine`, and take the artifact titled `Language mistake tracker` (the most recently updated if there are several). If there is none, give the fixes only and tell the user to install the tracker from https://github.com/wonjoonSeol/language-mistake-tracker.
 2. `ArtifactData` `get` collection `datasets`, doc `corrections` on `TRACKER_URL`. Note `source.url` (`/_blob/<asset id>`) and the document `version`.
 3. `Artifact` `read` with `url` = `TRACKER_URL` and `path` = the asset id. This saves the current CSV locally.
 4. Append one row per fix to that CSV: `id,date,language,category,original,corrected,rule`.

@@ -7,7 +7,7 @@ The user asked you to install the Language mistake tracker. Run these steps in o
 If the current directory is not this repository, download it with bash (not web fetch) into your working or scratchpad directory:
 
 ```sh
-curl -L -o language-mistake-tracker.zip https://github.com/wonjoonSeol-WS/language-mistake-tracker/archive/refs/heads/main.zip
+curl -L -o language-mistake-tracker.zip https://github.com/wonjoonSeol/language-mistake-tracker/archive/refs/heads/main.zip
 unzip -q language-mistake-tracker.zip
 cd language-mistake-tracker-main
 ```

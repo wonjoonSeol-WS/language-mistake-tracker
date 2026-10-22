@@ -44,7 +44,7 @@ Claude가 대화 중에 고쳐 준 외국어 실수를 모아 복습 자료로 �
 새 대화에 아래 문구를 그대로 붙여 넣으세요.
 
 ```
-https://github.com/wonjoonSeol-WS/language-mistake-tracker 의 INSTALL.md를 따라 설치해 줘
+https://github.com/wonjoonSeol/language-mistake-tracker 의 INSTALL.md를 따라 설치해 줘
 ```
 
 Claude가 대시보드를 만들고 language-coach 스킬을 Claude 계정에 추가해 줘요. 계정에 추가된 스킬은 Claude 앱과 Claude Code 모두에서 동작해요. Claude가 알려 준 대시보드 링크를 열어 보세요. Claude가 스킬을 직접 추가하지 못하면 `language-coach.zip`을 주니, **Settings > Customize > Skills**에서 올리면 돼요.
@@ -56,7 +56,7 @@ Claude가 대시보드를 만들고 language-coach 스킬을 Claude 계정에 �
 교정 기록은 대시보드 링크에 묶여 있어요. **새 대시보드는 빈 상태로 시작**하니, 업데이트는 항상 쓰던 대시보드에 덮어써야 해요. 마지막 줄의 링크를 내 대시보드 주소로 바꿔서 보내세요.
 
 ```
-https://github.com/wonjoonSeol-WS/language-mistake-tracker 의 INSTALL.md에 있는 "Updating" 절차대로 내 Language mistake tracker를 업데이트해 줘.
+https://github.com/wonjoonSeol/language-mistake-tracker 의 INSTALL.md에 있는 "Updating" 절차대로 내 Language mistake tracker를 업데이트해 줘.
 내 대시보드: (여기에 내 대시보드 링크 붙여 넣기)
 ```
 
@@ -67,7 +67,7 @@ Claude가 대시보드 화면과 스킬을 새 버전으로 바꿔 줘요. 교�
 대시보드가 이미 있다면 Claude Code에서 스킬만 추가합니다.
 
 ```
-/plugin marketplace add wonjoonSeol-WS/language-mistake-tracker
+/plugin marketplace add wonjoonSeol/language-mistake-tracker
 /plugin install language-coach@language-mistake-tracker
 ```
 
@@ -80,7 +80,7 @@ Claude가 대시보드 화면과 스킬을 새 버전으로 바꿔 줘요. 교�
 Claude 앱과 같은 계정으로 로그인한 Claude Code가 필요합니다.
 
 ```sh
-git clone https://github.com/wonjoonSeol-WS/language-mistake-tracker.git
+git clone https://github.com/wonjoonSeol/language-mistake-tracker.git
 cd language-mistake-tracker
 claude
 ```
@@ -160,4 +160,4 @@ data/                      내 데이터 (git에서 제외)
 
 ## 다른 프로젝트도 써 보세요
 
-마음에 드셨다면 제가 만든 다른 오픈소스도 둘러보세요. 안드로이드 앱, Claude 채팅 게임, Claude 애드온 등이 있어요: [wonjoonseol-ws.github.io](https://wonjoonseol-ws.github.io/ko/?from=language-mistake-tracker)
+마음에 드셨다면 제가 만든 다른 오픈소스도 둘러보세요. 안드로이드 앱, Claude 채팅 게임, Claude 애드온 등이 있어요: [wonjoonseol.github.io](https://wonjoonseol.github.io/ko/?from=language-mistake-tracker)

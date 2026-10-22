@@ -44,7 +44,7 @@ Screenshots use made-up sample data.
 Paste this into a new chat as is.
 
 ```
-Install https://github.com/wonjoonSeol-WS/language-mistake-tracker by following its INSTALL.md
+Install https://github.com/wonjoonSeol/language-mistake-tracker by following its INSTALL.md
 ```
 
 Claude creates your dashboard and adds the language-coach skill to your Claude account, so it works in the Claude app and in Claude Code. Open the dashboard link it gives you. If Claude cannot add the skill itself, it gives you `language-coach.zip` to upload under **Settings > Customize > Skills**.
@@ -56,7 +56,7 @@ To check it works, send a sentence with a mistake, such as `She go to work yeste
 Your corrections are tied to the dashboard link. **A new dashboard starts empty**, so always update the one you already have. Replace the link on the last line with your dashboard's address.
 
 ```
-Update my Language mistake tracker from https://github.com/wonjoonSeol-WS/language-mistake-tracker by following the "Updating" section of its INSTALL.md.
+Update my Language mistake tracker from https://github.com/wonjoonSeol/language-mistake-tracker by following the "Updating" section of its INSTALL.md.
 My dashboard: (paste your dashboard link here)
 ```
 
@@ -67,7 +67,7 @@ Claude replaces the dashboard's page and refreshes the skill. Your corrections a
 Already have the dashboard? Add just the skill in Claude Code:
 
 ```
-/plugin marketplace add wonjoonSeol-WS/language-mistake-tracker
+/plugin marketplace add wonjoonSeol/language-mistake-tracker
 /plugin install language-coach@language-mistake-tracker
 ```
 
@@ -80,7 +80,7 @@ The skill finds your dashboard by its title, `Language mistake tracker`, so keep
 You need Claude Code signed in to the same Claude account you use in the Claude app.
 
 ```sh
-git clone https://github.com/wonjoonSeol-WS/language-mistake-tracker.git
+git clone https://github.com/wonjoonSeol/language-mistake-tracker.git
 cd language-mistake-tracker
 claude
 ```
@@ -160,4 +160,4 @@ The language buttons set the `language` filter, and every panel shows the rows w
 
 ## Try my other projects
 
-Like this? I make other small open source tools too: Android apps, a Claude chat game, Claude add-ons and more. See them all at [wonjoonseol-ws.github.io](https://wonjoonseol-ws.github.io/?from=language-mistake-tracker).
+Like this? I make other small open source tools too: Android apps, a Claude chat game, Claude add-ons and more. See them all at [wonjoonseol.github.io](https://wonjoonseol.github.io/?from=language-mistake-tracker).
