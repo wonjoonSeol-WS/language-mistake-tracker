@@ -157,3 +157,7 @@ data/                      내 데이터 (git에서 제외)
 `corrections.csv`: `id,date,language,category,original,corrected,rule`. 반복 여부는 언어, 유형, 규칙 문구가 같은지로 판단하므로, 같은 실수에는 규칙 문구를 그대로 다시 씁니다.
 
 `guides.json`: `{id, language, category, title, rule, mnemonic, examples}` 배열. `examples`는 `"틀린 문장 → 고친 문장 | 틀린 문장 → 고친 문장"` 형식입니다.
+
+## 다른 프로젝트도 써 보세요
+
+마음에 드셨다면 제가 만든 다른 오픈소스도 둘러보세요. 안드로이드 앱, Claude 채팅 게임, Claude 애드온 등이 있어요: [wonjoonseol-ws.github.io](https://wonjoonseol-ws.github.io/ko/?from=language-mistake-tracker)

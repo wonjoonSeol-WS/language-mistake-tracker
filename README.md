@@ -157,3 +157,7 @@ The language buttons set the `language` filter, and every panel shows the rows w
 `corrections.csv`: `id,date,language,category,original,corrected,rule`. A repeat is the same language, category and rule text, so reuse the exact rule wording for the same mistake.
 
 `guides.json`: an array of `{id, language, category, title, rule, mnemonic, examples}`, where `examples` is `"wrong → right | wrong → right"`.
+
+## Try my other projects
+
+Like this? I make other small open source tools too: Android apps, a Claude chat game, Claude add-ons and more. See them all at [wonjoonseol-ws.github.io](https://wonjoonseol-ws.github.io/?from=language-mistake-tracker).
